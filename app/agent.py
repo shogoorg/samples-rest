@@ -33,14 +33,14 @@ os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
 import random
 from google.adk.tools.tool_context import ToolContext
 
-# Flower shop product catalog (aligned with products.csv in test data)
+# Flower shop product catalog
 PRODUCTS = {
-    "bouquet_roses": {"title": "Bouquet of Red Roses", "price": 3500},
-    "pot_ceramic": {"title": "Ceramic Pot", "price": 1500},
-    "bouquet_sunflowers": {"title": "Sunflower Bundle", "price": 2500},
-    "bouquet_tulips": {"title": "Spring Tulips", "price": 3000},
-    "orchid_white": {"title": "White Orchid", "price": 4500},
-    "gardenias": {"title": "Gardenias", "price": 2000},
+    "bouquet_roses": {"title": "Bouquet of Red Roses", "price": 35.00},
+    "pot_ceramic": {"title": "Ceramic Pot", "price": 15.00},
+    "bouquet_sunflowers": {"title": "Sunflower Bundle", "price": 25.00},
+    "bouquet_tulips": {"title": "Spring Tulips", "price": 30.00},
+    "orchid_white": {"title": "White Orchid", "price": 45.00},
+    "gardenias": {"title": "Gardenias", "price": 20.00},
 }
 
 
@@ -61,113 +61,183 @@ def search_products(query: str) -> str:
 
     res = "Available Products in Stock:\n"
     for pid, info in matches:
-        res += f"- [ID: {pid}] {info['title']} - ¥{info['price']}\n"
+        res += f"- [ID: {pid}] {info['title']} - ${info['price']:.2f}\n"
     return res
 
 
-def add_to_checkout(
-    tool_context: ToolContext, product_id: str, quantity: int = 1
+def discover_payment_methods() -> str:
+    """Discover supported payment handlers for checkout."""
+    return "Supported Payment Handlers:\n- ID: mock_payment_handler (Name: Mock Payment Handler)"
+
+
+def create_checkout_session(
+    tool_context: ToolContext,
+    product_id: str,
+    quantity: int = 1,
+    buyer_name: str = "John Doe",
+    buyer_email: str = "john.doe@example.com",
 ) -> str:
-    """Add a product to the user's checkout session.
+    """Initialize a new checkout session with the first product and buyer info.
 
     Args:
         tool_context: The tool context containing session state.
-        product_id: The ID of the product to add (e.g., bouquet_roses).
+        product_id: The ID of the first product to add.
         quantity: The quantity of the product to add. Defaults to 1.
+        buyer_name: Full name of the buyer. Defaults to "John Doe".
+        buyer_email: Email address of the buyer. Defaults to "john.doe@example.com".
     """
     if product_id not in PRODUCTS:
-        return f"Error: Product ID '{product_id}' does not exist. Please search for valid products first."
+        return f"Error: Product '{product_id}' not found."
 
-    # Initialize cart state if not exists
-    if "cart" not in tool_context.state:
-        tool_context.state["cart"] = {}
+    checkout_id = f"CHK-{random.randint(100000, 999999)}"
+    tool_context.state["checkout_id"] = checkout_id
+    tool_context.state["cart"] = {product_id: quantity}
+    tool_context.state["buyer"] = {"name": buyer_name, "email": buyer_email}
+
+    total = PRODUCTS[product_id]["price"] * quantity
+    return f"Checkout session created successfully.\n- Checkout ID: {checkout_id}\n- Item: {PRODUCTS[product_id]['title']} (x{quantity})\n- Total: ${total:.2f}"
+
+
+def add_item_to_checkout(
+    tool_context: ToolContext, product_id: str, quantity: int = 1
+) -> str:
+    """Add additional items to the active checkout session.
+
+    Args:
+        tool_context: The tool context containing session state.
+        product_id: The ID of the product to add.
+        quantity: The quantity of the product to add. Defaults to 1.
+    """
+    if "checkout_id" not in tool_context.state:
+        return "Error: No active checkout session. Please create one first."
+    if product_id not in PRODUCTS:
+        return f"Error: Product '{product_id}' not found."
 
     cart = tool_context.state["cart"]
     cart[product_id] = cart.get(product_id, 0) + quantity
+    tool_context.state["cart"] = cart
 
-    # Create current cart summary
-    summary = "Current Cart Summary:\n"
-    total = 0
-    for pid, qty in cart.items():
-        pinfo = PRODUCTS[pid]
-        subtotal = pinfo["price"] * qty
-        total += subtotal
-        summary += f"- {pinfo['title']} (x{qty}) - ¥{subtotal}\n"
-    summary += f"Total Amount: ¥{total}\n\n"
-
-    # Check if delivery details are provided
-    cust_info = tool_context.state.get("customer_info")
-    if not cust_info:
-        summary += (
-            "To complete the checkout, please provide your email address, "
-            "shipping address, and postal code so we can set up your delivery."
-        )
-    else:
-        summary += "All details are set. You can now complete your purchase by running 'complete_payment'."
-
-    return summary
+    subtotal = sum(PRODUCTS[pid]["price"] * qty for pid, qty in cart.items())
+    return f"Item added successfully. Current Subtotal: ${subtotal:.2f}"
 
 
-def set_customer_info(
-    tool_context: ToolContext, email: str, street_address: str, postal_code: str
-) -> str:
-    """Save customer delivery details and email for the current checkout session.
+def apply_discount_code(tool_context: ToolContext, code: str) -> str:
+    """Apply a discount code to the current checkout session.
 
     Args:
         tool_context: The tool context containing session state.
-        email: The customer's email address.
-        street_address: The shipping address.
+        code: The discount code to apply.
+    """
+    if "checkout_id" not in tool_context.state:
+        return "Error: No active checkout session."
+
+    tool_context.state["discount_code"] = code
+    cart = tool_context.state["cart"]
+    subtotal = sum(PRODUCTS[pid]["price"] * qty for pid, qty in cart.items())
+
+    discount_amount = 0.0
+    if code == "10OFF":
+        discount_amount = subtotal * 0.10
+
+    total = subtotal - discount_amount
+    return f"Discount code '{code}' applied.\n- Discount: -${discount_amount:.2f}\n- Total: ${total:.2f}"
+
+
+def select_fulfillment_destination(
+    tool_context: ToolContext, street_address: str, postal_code: str
+) -> str:
+    """Set the shipping address and retrieve available shipping options.
+
+    Args:
+        tool_context: The tool context containing session state.
+        street_address: The delivery street address.
         postal_code: The postal code.
     """
-    tool_context.state["customer_info"] = {
-        "email": email,
-        "street_address": street_address,
-        "postal_code": postal_code,
+    if "checkout_id" not in tool_context.state:
+        return "Error: No active checkout session."
+
+    tool_context.state["shipping_address"] = {
+        "address": street_address,
+        "zip": postal_code,
     }
 
-    cart = tool_context.state.get("cart", {})
-    if not cart:
-        return "Customer information saved successfully. Please add products to your checkout next."
-
-    total = sum(PRODUCTS[pid]["price"] * qty for pid, qty in cart.items())
-
-    res = "Customer Details Updated:\n"
-    res += f"- Email: {email}\n"
-    res += f"- Shipping: {street_address} (Zip: {postal_code})\n\n"
-    res += f"Order Total: ¥{total}\n"
-    res += "Everything is ready! Please run 'complete_payment' to finish your purchase."
-    return res
+    return (
+        f"Fulfillment destination set to: {street_address} (Zip: {postal_code})\n"
+        f"Available Options:\n"
+        f"- ID: opt_standard (Name: Standard Shipping - $5.00)\n"
+        f"- ID: opt_express (Name: Express Shipping - $15.00)"
+    )
 
 
-def complete_payment(tool_context: ToolContext) -> str:
-    """Process the payment and complete the checkout session.
+def select_fulfillment_option(
+    tool_context: ToolContext, option_id: str
+) -> str:
+    """Select the preferred shipping option.
 
     Args:
         tool_context: The tool context containing session state.
+        option_id: The ID of the preferred shipping option (e.g. opt_standard).
     """
-    cart = tool_context.state.get("cart", {})
-    cust_info = tool_context.state.get("customer_info")
+    if "checkout_id" not in tool_context.state:
+        return "Error: No active checkout session."
 
-    if not cart:
-        return "Cannot complete payment: Your cart is empty."
-    if not cust_info:
-        return "Cannot complete payment: Shipping details and email are required. Please provide them first."
+    shipping_fee = 5.00 if option_id == "opt_standard" else 15.00
+    tool_context.state["shipping_fee"] = shipping_fee
+    tool_context.state["shipping_option"] = option_id
 
-    # Simulate payment completion
+    cart = tool_context.state["cart"]
+    subtotal = sum(PRODUCTS[pid]["price"] * qty for pid, qty in cart.items())
+    discount = (
+        subtotal * 0.10
+        if tool_context.state.get("discount_code") == "10OFF"
+        else 0.0
+    )
+
+    total = subtotal - discount + shipping_fee
+    return f"Fulfillment option selected: {option_id} (${shipping_fee:.2f}).\n- Grand Total: ${total:.2f}"
+
+
+def complete_payment(
+    tool_context: ToolContext, handler_id: str = "mock_payment_handler"
+) -> str:
+    """Process the payment using mock_payment_handler and finalize the order.
+
+    Args:
+        tool_context: The tool context containing session state.
+        handler_id: The ID of the payment handler to use. Defaults to "mock_payment_handler".
+    """
+    if "checkout_id" not in tool_context.state:
+        return "Error: No active checkout session."
+    if "shipping_fee" not in tool_context.state:
+        return "Error: Please select shipping options before completing payment."
+
     order_id = f"ORD-{random.randint(10000, 99999)}"
-    total = sum(PRODUCTS[pid]["price"] * qty for pid, qty in cart.items())
+    cart = tool_context.state["cart"]
+    buyer = tool_context.state["buyer"]
+    addr = tool_context.state["shipping_address"]
 
-    res = f"🎉 Payment Completed and Order Created successfully!\n"
-    res += f"Order ID: {order_id}\n"
-    res += f"Total Paid: ¥{total}\n"
-    res += f"Receipt Sent To: {cust_info['email']}\n"
-    res += f"Deliver To: {cust_info['street_address']} (Zip: {cust_info['postal_code']})\n\n"
-    res += "Thank you for shopping at the UCP Flower Shop!"
+    subtotal = sum(PRODUCTS[pid]["price"] * qty for pid, qty in cart.items())
+    discount = (
+        subtotal * 0.10
+        if tool_context.state.get("discount_code") == "10OFF"
+        else 0.0
+    )
+    shipping_fee = tool_context.state["shipping_fee"]
+    total = subtotal - discount + shipping_fee
 
-    # Reset session state
+    res = f"🎉 Order finalized successfully via {handler_id}!\n"
+    res += f"- Order ID: {order_id}\n"
+    res += f"- Total Paid: ${total:.2f}\n"
+    res += f"- Shipping to: {addr['address']} (Zip: {addr['zip']})\n"
+    res += f"- Receipt sent to: {buyer['email']}"
+
+    # 状態の初期化
     tool_context.state["cart"] = {}
-    tool_context.state["customer_info"] = None
-
+    tool_context.state["checkout_id"] = None
+    tool_context.state["discount_code"] = None
+    tool_context.state["shipping_address"] = None
+    tool_context.state["shipping_fee"] = None
+    tool_context.state["shipping_option"] = None
     return res
 
 
@@ -179,13 +249,26 @@ root_agent = Agent(
     ),
     instruction=(
         "You are a helpful shopping assistant for the UCP Flower Shop. "
-        "Your goal is to guide the user through their shopping journey:\n"
-        "1. Help them search for products using 'search_products'.\n"
-        "2. Add their selected items to checkout using 'add_to_checkout'.\n"
-        "3. Ask the user for their email, shipping address, and postal code, then save it using 'set_customer_info'.\n"
-        "4. Finalize the order using 'complete_payment' once details are filled."
+        "Your goal is to guide the user through their shopping journey by coordinating the checkout process:\n"
+        "1. List or search available products using 'search_products'.\n"
+        "2. Discover supported payment methods using 'discover_payment_methods'.\n"
+        "3. Start a new checkout session with a product using 'create_checkout_session'.\n"
+        "4. Add more items to the checkout using 'add_item_to_checkout'.\n"
+        "5. Apply discount codes (like '10OFF') using 'apply_discount_code'.\n"
+        "6. Set shipping destination details using 'select_fulfillment_destination'.\n"
+        "7. Choose a shipping option (like standard or express) using 'select_fulfillment_option'.\n"
+        "8. Finalize the checkout and complete payment using 'complete_payment'."
     ),
-    tools=[search_products, add_to_checkout, set_customer_info, complete_payment],
+    tools=[
+        search_products,
+        discover_payment_methods,
+        create_checkout_session,
+        add_item_to_checkout,
+        apply_discount_code,
+        select_fulfillment_destination,
+        select_fulfillment_option,
+        complete_payment,
+    ],
 )
 
 app = App(

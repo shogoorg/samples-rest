@@ -32,7 +32,7 @@ Before you begin, ensure you have:
 
 ### 1. Run the ADK Agent (Shopping Assistant)
 
-This agent simulates a full customer shopping checkout flow referencing the **A2A (Agent-to-Agent)** shopping protocol.
+This agent simulates a full customer shopping checkout flow referencing the **UCP (Universal Commerce Protocol)**.
 
 Install `agents-cli` and its skills if not already installed:
 
@@ -55,18 +55,28 @@ agents-cli playground
 Or test the agent directly from your terminal using commands to run through the entire shopping flow:
 
 ```bash
-# 1. Search for flowers in catalog (calls 'search_products')
-agents-cli run "Show me roses in stock"
+# 1. Discover payment methods (calls 'discover_payment_methods')
+agents-cli run "What payment methods are supported?"
 
-# 2. Add product to checkout cart (calls 'add_to_checkout')
-agents-cli run "Add bouquet_roses to my checkout"
+# 2. Start a checkout session (calls 'create_checkout_session')
+agents-cli run "Create a checkout session with bouquet_roses for John Doe, email john.doe@example.com"
 
-# 3. Save shipping details (calls 'set_customer_info')
-agents-cli run "Set my shipping info: email is shogo@example.com, address is 1600 Amphitheatre Pkwy, postal code is 94043"
+# 3. Add more items to the checkout (calls 'add_item_to_checkout')
+agents-cli run "Add two pot_ceramic to my checkout"
 
-# 4. Finalize payment and place order (calls 'complete_payment')
-agents-cli run "Complete my payment now"
+# 4. Apply a discount code (calls 'apply_discount_code')
+agents-cli run "Apply discount code 10OFF"
+
+# 5. Set shipping address (calls 'select_fulfillment_destination')
+agents-cli run "My shipping address is 1600 Amphitheatre Pkwy, postal code is 94043"
+
+# 6. Select shipping option (calls 'select_fulfillment_option')
+agents-cli run "Select the standard shipping option"
+
+# 7. Finalize payment and place order (calls 'complete_payment')
+agents-cli run "Complete my payment using mock_payment_handler"
 ```
+
 
 ### 2. Run the UCP Merchant Server (Python/FastAPI)
 
