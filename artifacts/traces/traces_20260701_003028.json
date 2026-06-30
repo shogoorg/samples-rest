@@ -1,0 +1,518 @@
+{
+  "eval_cases": [
+    {
+      "prompt": {
+        "parts": [
+          {
+            "text": "Hello, what can you help me with?"
+          }
+        ],
+        "role": "user"
+      },
+      "responses": [
+        {
+          "response": {
+            "parts": [
+              {
+                "text": "Hello! I can help you with anything related to the UCP Flower Shop.\n\nHere are a few things I can assist you with:\n\n1.  **Searching for products:** You can ask me to find specific flowers, plants, or gifts (e.g., \"Show me all the roses\" or \"Do you have any potted orchids?\").\n2.  **Checking payment options:** I can tell you what payment methods we accept.\n3.  **Guiding you through the checkout process:** I can help you select items, apply discounts, set a shipping address, choose a shipping option, and complete your purchase.\n\nHow can I help you start your shopping today? Perhaps you'd like to **search for a product**?"
+              }
+            ],
+            "role": "model"
+          }
+        }
+      ],
+      "eval_case_id": "greeting",
+      "agent_data": {
+        "agents": {
+          "root_agent": {
+            "agent_id": "root_agent",
+            "agent_type": "LlmAgent",
+            "description": "",
+            "instruction": "You are a helpful shopping assistant for the UCP Flower Shop. Your goal is to guide the user through their shopping journey by coordinating the checkout process:\n1. List or search available products using 'search_products'.\n2. Discover supported payment methods using 'discover_payment_methods'.\n3. Start a new checkout session with a product using 'create_checkout_session'.\n4. Add more items to the checkout using 'add_item_to_checkout'.\n5. Apply discount codes (like '10OFF') using 'apply_discount_code'.\n6. Set shipping destination details using 'select_fulfillment_destination'.\n7. Choose a shipping option (like standard or express) using 'select_fulfillment_option'.\n8. Finalize the checkout and complete payment using 'complete_payment'.",
+            "tools": [
+              {
+                "function_declarations": [
+                  {
+                    "description": "Search for flowers or products available in the flower shop catalog.\n\nArgs:\n    query: The search term (e.g. roses, sunflowers, pot, tulips, orchid).",
+                    "name": "search_products",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "query": {
+                          "title": "Query",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "title": "search_productsParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Discover supported payment handlers for checkout.",
+                    "name": "discover_payment_methods",
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Initialize a new checkout session with the first product and buyer info.\n\nArgs:\n    tool_context: The tool context containing session state.\n    product_id: The ID of the first product to add.\n    quantity: The quantity of the product to add. Defaults to 1.\n    buyer_name: Full name of the buyer. Defaults to \"John Doe\".\n    buyer_email: Email address of the buyer. Defaults to \"john.doe@example.com\".",
+                    "name": "create_checkout_session",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "product_id": {
+                          "title": "Product Id",
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "default": 1,
+                          "title": "Quantity",
+                          "type": "integer"
+                        },
+                        "buyer_name": {
+                          "default": "John Doe",
+                          "title": "Buyer Name",
+                          "type": "string"
+                        },
+                        "buyer_email": {
+                          "default": "john.doe@example.com",
+                          "title": "Buyer Email",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "product_id"
+                      ],
+                      "title": "create_checkout_sessionParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Add additional items to the active checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    product_id: The ID of the product to add.\n    quantity: The quantity of the product to add. Defaults to 1.",
+                    "name": "add_item_to_checkout",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "product_id": {
+                          "title": "Product Id",
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "default": 1,
+                          "title": "Quantity",
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "product_id"
+                      ],
+                      "title": "add_item_to_checkoutParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Apply a discount code to the current checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    code: The discount code to apply.",
+                    "name": "apply_discount_code",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "code": {
+                          "title": "Code",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "title": "apply_discount_codeParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Set the shipping address and retrieve available shipping options.\n\nArgs:\n    tool_context: The tool context containing session state.\n    street_address: The delivery street address.\n    postal_code: The postal code.",
+                    "name": "select_fulfillment_destination",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "street_address": {
+                          "title": "Street Address",
+                          "type": "string"
+                        },
+                        "postal_code": {
+                          "title": "Postal Code",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "street_address",
+                        "postal_code"
+                      ],
+                      "title": "select_fulfillment_destinationParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Select the preferred shipping option.\n\nArgs:\n    tool_context: The tool context containing session state.\n    option_id: The ID of the preferred shipping option (e.g. opt_standard).",
+                    "name": "select_fulfillment_option",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "option_id": {
+                          "title": "Option Id",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "option_id"
+                      ],
+                      "title": "select_fulfillment_optionParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Process the payment using mock_payment_handler and finalize the order.\n\nArgs:\n    tool_context: The tool context containing session state.\n    handler_id: The ID of the payment handler to use. Defaults to \"mock_payment_handler\".",
+                    "name": "complete_payment",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "handler_id": {
+                          "default": "mock_payment_handler",
+                          "title": "Handler Id",
+                          "type": "string"
+                        }
+                      },
+                      "title": "complete_paymentParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              }
+            ],
+            "sub_agents": []
+          }
+        },
+        "turns": [
+          {
+            "turn_index": 0,
+            "turn_id": "turn_0",
+            "events": [
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "text": "Hello! I can help you with anything related to the UCP Flower Shop.\n\nHere are a few things I can assist you with:\n\n1.  **Searching for products:** You can ask me to find specific flowers, plants, or gifts (e.g., \"Show me all the roses\" or \"Do you have any potted orchids?\").\n2.  **Checking payment options:** I can tell you what payment methods we accept.\n3.  **Guiding you through the checkout process:** I can help you select items, apply discounts, set a shipping address, choose a shipping option, and complete your purchase.\n\nHow can I help you start your shopping today? Perhaps you'd like to **search for a product**?"
+                    }
+                  ],
+                  "role": "model"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "prompt": {
+        "parts": [
+          {
+            "text": "What's the weather like in San Francisco?"
+          }
+        ],
+        "role": "user"
+      },
+      "responses": [
+        {
+          "response": {
+            "parts": [
+              {
+                "text": "I am sorry, but I do not have the ability to check the weather.\n\nI am here to help you with the UCP Flower Shop. I can help you:\n\n*   **Search for flowers** (e.g., \"Show me roses\" or \"Do you have tulips?\")\n*   **Start a new order** and guide you through the checkout process.\n*   **Find out what payment methods** we support.\n\nHow can I assist you with your flower purchase today?"
+              }
+            ],
+            "role": "model"
+          }
+        }
+      ],
+      "eval_case_id": "weather_query",
+      "agent_data": {
+        "agents": {
+          "root_agent": {
+            "agent_id": "root_agent",
+            "agent_type": "LlmAgent",
+            "description": "",
+            "instruction": "You are a helpful shopping assistant for the UCP Flower Shop. Your goal is to guide the user through their shopping journey by coordinating the checkout process:\n1. List or search available products using 'search_products'.\n2. Discover supported payment methods using 'discover_payment_methods'.\n3. Start a new checkout session with a product using 'create_checkout_session'.\n4. Add more items to the checkout using 'add_item_to_checkout'.\n5. Apply discount codes (like '10OFF') using 'apply_discount_code'.\n6. Set shipping destination details using 'select_fulfillment_destination'.\n7. Choose a shipping option (like standard or express) using 'select_fulfillment_option'.\n8. Finalize the checkout and complete payment using 'complete_payment'.",
+            "tools": [
+              {
+                "function_declarations": [
+                  {
+                    "description": "Search for flowers or products available in the flower shop catalog.\n\nArgs:\n    query: The search term (e.g. roses, sunflowers, pot, tulips, orchid).",
+                    "name": "search_products",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "query": {
+                          "title": "Query",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "title": "search_productsParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Discover supported payment handlers for checkout.",
+                    "name": "discover_payment_methods",
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Initialize a new checkout session with the first product and buyer info.\n\nArgs:\n    tool_context: The tool context containing session state.\n    product_id: The ID of the first product to add.\n    quantity: The quantity of the product to add. Defaults to 1.\n    buyer_name: Full name of the buyer. Defaults to \"John Doe\".\n    buyer_email: Email address of the buyer. Defaults to \"john.doe@example.com\".",
+                    "name": "create_checkout_session",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "product_id": {
+                          "title": "Product Id",
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "default": 1,
+                          "title": "Quantity",
+                          "type": "integer"
+                        },
+                        "buyer_name": {
+                          "default": "John Doe",
+                          "title": "Buyer Name",
+                          "type": "string"
+                        },
+                        "buyer_email": {
+                          "default": "john.doe@example.com",
+                          "title": "Buyer Email",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "product_id"
+                      ],
+                      "title": "create_checkout_sessionParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Add additional items to the active checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    product_id: The ID of the product to add.\n    quantity: The quantity of the product to add. Defaults to 1.",
+                    "name": "add_item_to_checkout",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "product_id": {
+                          "title": "Product Id",
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "default": 1,
+                          "title": "Quantity",
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "product_id"
+                      ],
+                      "title": "add_item_to_checkoutParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Apply a discount code to the current checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    code: The discount code to apply.",
+                    "name": "apply_discount_code",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "code": {
+                          "title": "Code",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "title": "apply_discount_codeParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Set the shipping address and retrieve available shipping options.\n\nArgs:\n    tool_context: The tool context containing session state.\n    street_address: The delivery street address.\n    postal_code: The postal code.",
+                    "name": "select_fulfillment_destination",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "street_address": {
+                          "title": "Street Address",
+                          "type": "string"
+                        },
+                        "postal_code": {
+                          "title": "Postal Code",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "street_address",
+                        "postal_code"
+                      ],
+                      "title": "select_fulfillment_destinationParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Select the preferred shipping option.\n\nArgs:\n    tool_context: The tool context containing session state.\n    option_id: The ID of the preferred shipping option (e.g. opt_standard).",
+                    "name": "select_fulfillment_option",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "option_id": {
+                          "title": "Option Id",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "option_id"
+                      ],
+                      "title": "select_fulfillment_optionParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Process the payment using mock_payment_handler and finalize the order.\n\nArgs:\n    tool_context: The tool context containing session state.\n    handler_id: The ID of the payment handler to use. Defaults to \"mock_payment_handler\".",
+                    "name": "complete_payment",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "handler_id": {
+                          "default": "mock_payment_handler",
+                          "title": "Handler Id",
+                          "type": "string"
+                        }
+                      },
+                      "title": "complete_paymentParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              }
+            ],
+            "sub_agents": []
+          }
+        },
+        "turns": [
+          {
+            "turn_index": 0,
+            "turn_id": "turn_0",
+            "events": [
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "text": "I am sorry, but I do not have the ability to check the weather.\n\nI am here to help you with the UCP Flower Shop. I can help you:\n\n*   **Search for flowers** (e.g., \"Show me roses\" or \"Do you have tulips?\")\n*   **Start a new order** and guide you through the checkout process.\n*   **Find out what payment methods** we support.\n\nHow can I assist you with your flower purchase today?"
+                    }
+                  ],
+                  "role": "model"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
