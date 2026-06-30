@@ -2,6 +2,9 @@
 
 A hybrid project containing a ReAct shopping agent (built with Google ADK) and a UCP (Universal Commerce Protocol) Merchant Server. Both components reference the UCP (Universal Commerce Protocol) and its sample REST implementation.
 
+Specifically, it is based on the [UCP Server README](https://github.com/Universal-Commerce-Protocol/samples/blob/main/rest/python/server/README.md) and the [UCP Client Script](https://github.com/Universal-Commerce-Protocol/samples/blob/main/rest/python/client/flower_shop/simple_happy_path_client.py) from the official Universal-Commerce-Protocol repository.
+
+
 ## Project Structure
 
 ```
