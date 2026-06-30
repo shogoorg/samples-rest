@@ -1,0 +1,1098 @@
+{
+  "eval_case_results": [
+    {
+      "eval_case_index": 0,
+      "response_candidate_results": [
+        {
+          "response_index": 0,
+          "metric_results": {
+            "custom_response_quality": {
+              "metric_name": "custom_response_quality",
+              "score": 5.0,
+              "explanation": "The agent perfectly answers the user's prompt by providing a clear and comprehensive list of its capabilities. It includes general AI assistant functions like answering questions, creative tasks, and summarization, and also correctly highlights its specialized tool-based capabilities (weather and current time). The response is well-structured, easy to understand, and directly addresses the 'what can you help me with?' query. The information provided is accurate based on the agent's defined tools and general LLM capabilities.",
+              "rubric_verdicts": null,
+              "raw_output": null,
+              "error_message": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "eval_case_index": 1,
+      "response_candidate_results": [
+        {
+          "response_index": 0,
+          "metric_results": {
+            "custom_response_quality": {
+              "metric_name": "custom_response_quality",
+              "score": 5.0,
+              "explanation": "The agent perfectly understood the user's query and accurately used the `get_weather` tool to retrieve the relevant information for 'San Francisco'. The final response directly and clearly states the weather conditions found by the tool, including the temperature and description, and correctly re-incorporates the location. The response is precise, complete, and well-formed.",
+              "rubric_verdicts": null,
+              "raw_output": null,
+              "error_message": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "eval_case_index": 2,
+      "response_candidate_results": [
+        {
+          "response_index": 0,
+          "metric_results": {
+            "custom_response_quality": {
+              "metric_name": "custom_response_quality",
+              "score": 5.0,
+              "explanation": "The agent perfectly addresses the user's general query, 'Hello, what can you help me with?'. It introduces itself clearly as a shopping assistant for the UCP Flower Shop and then succinctly outlines its core capabilities, which directly map to the available tools (`search_products`, `add_to_checkout`, `set_customer_info`, `complete_payment`). The explanation is well-structured with bullet points and provides helpful examples for product search. It concludes with an engaging question to prompt further interaction, making it a highly relevant, comprehensive, and well-structured response.",
+              "rubric_verdicts": null,
+              "raw_output": null,
+              "error_message": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "eval_case_index": 3,
+      "response_candidate_results": [
+        {
+          "response_index": 0,
+          "metric_results": {
+            "custom_response_quality": {
+              "metric_name": "custom_response_quality",
+              "score": 5.0,
+              "explanation": "The user asked a question outside the agent's defined capabilities ('What's the weather like in San Francisco?'). The agent correctly identified that it could not fulfill this request and politely declined, explaining its limitations (only UCP Flower Shop inquiries, no real-time weather). It then successfully redirected the user to its core functionalities by asking if it could help with flowers or orders. This is an excellent example of an AI assistant handling out-of-scope queries effectively and gracefully.",
+              "rubric_verdicts": null,
+              "raw_output": null,
+              "error_message": null
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "summary_metrics": [
+    {
+      "metric_name": "custom_response_quality",
+      "num_cases_total": 4,
+      "num_cases_valid": 4,
+      "num_cases_error": 0,
+      "mean_score": 5.0,
+      "stdev_score": 0.0,
+      "pass_rate": null
+    }
+  ],
+  "win_rates": null,
+  "evaluation_dataset": [
+    {
+      "bigquery_source": null,
+      "gcs_source": null,
+      "eval_cases": [
+        {
+          "prompt": {
+            "parts": [
+              {
+                "media_resolution": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "file_data": null,
+                "function_call": null,
+                "function_response": null,
+                "inline_data": null,
+                "text": "Hello, what can you help me with?",
+                "thought": null,
+                "thought_signature": null,
+                "video_metadata": null,
+                "tool_call": null,
+                "tool_response": null,
+                "part_metadata": null
+              }
+            ],
+            "role": "user"
+          },
+          "responses": [
+            {
+              "response": {
+                "parts": [
+                  {
+                    "media_resolution": null,
+                    "code_execution_result": null,
+                    "executable_code": null,
+                    "file_data": null,
+                    "function_call": null,
+                    "function_response": null,
+                    "inline_data": null,
+                    "text": "Hello! I am a helpful AI assistant. I can help you with a wide range of tasks, including:\n\n1.  **Answering questions:** I can provide information on a variety of topics, from history and science to pop culture and current events.\n2.  **Creative tasks:** I can write stories, poems, code, scripts, musical pieces, email, letters, etc.\n3.  **Summarization and analysis:** I can help you understand and process large amounts of text.\n4.  **Specialized information (using my tools):**\n    *   I can check the **weather** for any location.\n    *   I can find the **current time** for a specific city.\n\nJust tell me what you'd like to do!",
+                    "thought": null,
+                    "thought_signature": null,
+                    "video_metadata": null,
+                    "tool_call": null,
+                    "tool_response": null,
+                    "part_metadata": null
+                  }
+                ],
+                "role": "model"
+              }
+            }
+          ],
+          "reference": null,
+          "system_instruction": null,
+          "conversation_history": null,
+          "rubric_groups": null,
+          "eval_case_id": "greeting",
+          "intermediate_events": null,
+          "agent_info": null,
+          "agent_data": {
+            "agents": {
+              "root_agent": {
+                "agent_id": "root_agent",
+                "agent_type": "LlmAgent",
+                "description": "",
+                "instruction": "You are a helpful AI assistant designed to provide accurate and useful information.",
+                "tools": [
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Simulates a web search. Use it get information on weather.\n\nArgs:\n    query: A string containing the location to get weather information for.\n\nReturns:\n    A string with the simulated weather information for the queried location.",
+                        "name": "get_weather",
+                        "parameters": null,
+                        "parameters_json_schema": {
+                          "properties": {
+                            "query": {
+                              "title": "Query",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "query"
+                          ],
+                          "title": "get_weatherParams",
+                          "type": "object"
+                        },
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  },
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Simulates getting the current time for a city.\n\nArgs:\n    city: The name of the city to get the current time for.\n\nReturns:\n    A string with the current time information.",
+                        "name": "get_current_time",
+                        "parameters": null,
+                        "parameters_json_schema": {
+                          "properties": {
+                            "query": {
+                              "title": "Query",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "query"
+                          ],
+                          "title": "get_current_timeParams",
+                          "type": "object"
+                        },
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  }
+                ],
+                "sub_agents": []
+              }
+            },
+            "turns": [
+              {
+                "turn_index": 0,
+                "turn_id": "turn_0",
+                "events": [
+                  {
+                    "author": "root_agent",
+                    "content": {
+                      "parts": [
+                        {
+                          "media_resolution": null,
+                          "code_execution_result": null,
+                          "executable_code": null,
+                          "file_data": null,
+                          "function_call": null,
+                          "function_response": null,
+                          "inline_data": null,
+                          "text": "Hello! I am a helpful AI assistant. I can help you with a wide range of tasks, including:\n\n1.  **Answering questions:** I can provide information on a variety of topics, from history and science to pop culture and current events.\n2.  **Creative tasks:** I can write stories, poems, code, scripts, musical pieces, email, letters, etc.\n3.  **Summarization and analysis:** I can help you understand and process large amounts of text.\n4.  **Specialized information (using my tools):**\n    *   I can check the **weather** for any location.\n    *   I can find the **current time** for a specific city.\n\nJust tell me what you'd like to do!",
+                          "thought": null,
+                          "thought_signature": null,
+                          "video_metadata": null,
+                          "tool_call": null,
+                          "tool_response": null,
+                          "part_metadata": null
+                        }
+                      ],
+                      "role": "model"
+                    },
+                    "event_time": null,
+                    "state_delta": null,
+                    "active_tools": null
+                  }
+                ]
+              }
+            ]
+          },
+          "user_scenario": null
+        },
+        {
+          "prompt": {
+            "parts": [
+              {
+                "media_resolution": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "file_data": null,
+                "function_call": null,
+                "function_response": null,
+                "inline_data": null,
+                "text": "What's the weather like in San Francisco?",
+                "thought": null,
+                "thought_signature": null,
+                "video_metadata": null,
+                "tool_call": null,
+                "tool_response": null,
+                "part_metadata": null
+              }
+            ],
+            "role": "user"
+          },
+          "responses": [
+            {
+              "response": {
+                "parts": [
+                  {
+                    "media_resolution": null,
+                    "code_execution_result": null,
+                    "executable_code": null,
+                    "file_data": null,
+                    "function_call": null,
+                    "function_response": null,
+                    "inline_data": null,
+                    "text": "It's 60 degrees and foggy in San Francisco.",
+                    "thought": null,
+                    "thought_signature": null,
+                    "video_metadata": null,
+                    "tool_call": null,
+                    "tool_response": null,
+                    "part_metadata": null
+                  }
+                ],
+                "role": "model"
+              }
+            }
+          ],
+          "reference": null,
+          "system_instruction": null,
+          "conversation_history": null,
+          "rubric_groups": null,
+          "eval_case_id": "weather_query",
+          "intermediate_events": null,
+          "agent_info": null,
+          "agent_data": {
+            "agents": {
+              "root_agent": {
+                "agent_id": "root_agent",
+                "agent_type": "LlmAgent",
+                "description": "",
+                "instruction": "You are a helpful AI assistant designed to provide accurate and useful information.",
+                "tools": [
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Simulates a web search. Use it get information on weather.\n\nArgs:\n    query: A string containing the location to get weather information for.\n\nReturns:\n    A string with the simulated weather information for the queried location.",
+                        "name": "get_weather",
+                        "parameters": null,
+                        "parameters_json_schema": {
+                          "properties": {
+                            "query": {
+                              "title": "Query",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "query"
+                          ],
+                          "title": "get_weatherParams",
+                          "type": "object"
+                        },
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  },
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Simulates getting the current time for a city.\n\nArgs:\n    city: The name of the city to get the current time for.\n\nReturns:\n    A string with the current time information.",
+                        "name": "get_current_time",
+                        "parameters": null,
+                        "parameters_json_schema": {
+                          "properties": {
+                            "query": {
+                              "title": "Query",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "query"
+                          ],
+                          "title": "get_current_timeParams",
+                          "type": "object"
+                        },
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  }
+                ],
+                "sub_agents": []
+              }
+            },
+            "turns": [
+              {
+                "turn_index": 0,
+                "turn_id": "turn_0",
+                "events": [
+                  {
+                    "author": "root_agent",
+                    "content": {
+                      "parts": [
+                        {
+                          "media_resolution": null,
+                          "code_execution_result": null,
+                          "executable_code": null,
+                          "file_data": null,
+                          "function_call": {
+                            "id": "adk-803e10c8-571b-458a-92d2-31f4d5de2ee2",
+                            "args": {
+                              "query": "San Francisco"
+                            },
+                            "name": "get_weather",
+                            "partial_args": null,
+                            "will_continue": null
+                          },
+                          "function_response": null,
+                          "inline_data": null,
+                          "text": null,
+                          "thought": null,
+                          "thought_signature": null,
+                          "video_metadata": null,
+                          "tool_call": null,
+                          "tool_response": null,
+                          "part_metadata": null
+                        }
+                      ],
+                      "role": "model"
+                    },
+                    "event_time": null,
+                    "state_delta": null,
+                    "active_tools": null
+                  },
+                  {
+                    "author": "root_agent",
+                    "content": {
+                      "parts": [
+                        {
+                          "media_resolution": null,
+                          "code_execution_result": null,
+                          "executable_code": null,
+                          "file_data": null,
+                          "function_call": null,
+                          "function_response": {
+                            "will_continue": null,
+                            "scheduling": null,
+                            "parts": null,
+                            "id": "adk-803e10c8-571b-458a-92d2-31f4d5de2ee2",
+                            "name": "get_weather",
+                            "response": {
+                              "result": "It's 60 degrees and foggy."
+                            }
+                          },
+                          "inline_data": null,
+                          "text": null,
+                          "thought": null,
+                          "thought_signature": null,
+                          "video_metadata": null,
+                          "tool_call": null,
+                          "tool_response": null,
+                          "part_metadata": null
+                        }
+                      ],
+                      "role": "user"
+                    },
+                    "event_time": null,
+                    "state_delta": null,
+                    "active_tools": null
+                  },
+                  {
+                    "author": "root_agent",
+                    "content": {
+                      "parts": [
+                        {
+                          "media_resolution": null,
+                          "code_execution_result": null,
+                          "executable_code": null,
+                          "file_data": null,
+                          "function_call": null,
+                          "function_response": null,
+                          "inline_data": null,
+                          "text": "It's 60 degrees and foggy in San Francisco.",
+                          "thought": null,
+                          "thought_signature": null,
+                          "video_metadata": null,
+                          "tool_call": null,
+                          "tool_response": null,
+                          "part_metadata": null
+                        }
+                      ],
+                      "role": "model"
+                    },
+                    "event_time": null,
+                    "state_delta": null,
+                    "active_tools": null
+                  }
+                ]
+              }
+            ]
+          },
+          "user_scenario": null
+        },
+        {
+          "prompt": {
+            "parts": [
+              {
+                "media_resolution": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "file_data": null,
+                "function_call": null,
+                "function_response": null,
+                "inline_data": null,
+                "text": "Hello, what can you help me with?",
+                "thought": null,
+                "thought_signature": null,
+                "video_metadata": null,
+                "tool_call": null,
+                "tool_response": null,
+                "part_metadata": null
+              }
+            ],
+            "role": "user"
+          },
+          "responses": [
+            {
+              "response": {
+                "parts": [
+                  {
+                    "media_resolution": null,
+                    "code_execution_result": null,
+                    "executable_code": null,
+                    "file_data": null,
+                    "function_call": null,
+                    "function_response": null,
+                    "inline_data": null,
+                    "text": "Hello! I'm your helpful shopping assistant for the UCP Flower Shop.\n\nI can help you with your shopping in a few ways:\n\n1.  **Search for products:** Tell me what you're looking for (like \"roses,\" \"tulips,\" or \"potted plants\"), and I can search our catalog for you.\n2.  **Add items to your cart:** Once you find something you like, I can add it to your checkout.\n3.  **Process your order:** I can collect your shipping details and process your payment to complete your order.\n\nHow can I help you start your flower shopping today?",
+                    "thought": null,
+                    "thought_signature": null,
+                    "video_metadata": null,
+                    "tool_call": null,
+                    "tool_response": null,
+                    "part_metadata": null
+                  }
+                ],
+                "role": "model"
+              }
+            }
+          ],
+          "reference": null,
+          "system_instruction": null,
+          "conversation_history": null,
+          "rubric_groups": null,
+          "eval_case_id": "greeting",
+          "intermediate_events": null,
+          "agent_info": null,
+          "agent_data": {
+            "agents": {
+              "root_agent": {
+                "agent_id": "root_agent",
+                "agent_type": "LlmAgent",
+                "description": "",
+                "instruction": "You are a helpful shopping assistant for the UCP Flower Shop. Your goal is to guide the user through their shopping journey:\n1. Help them search for products using 'search_products'.\n2. Add their selected items to checkout using 'add_to_checkout'.\n3. Ask the user for their email, shipping address, and postal code, then save it using 'set_customer_info'.\n4. Finalize the order using 'complete_payment' once details are filled.",
+                "tools": [
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Search for flowers or products available in the flower shop catalog.\n\nArgs:\n    query: The search term (e.g. roses, sunflowers, pot, tulips, orchid).",
+                        "name": "search_products",
+                        "parameters": null,
+                        "parameters_json_schema": {
+                          "properties": {
+                            "query": {
+                              "title": "Query",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "query"
+                          ],
+                          "title": "search_productsParams",
+                          "type": "object"
+                        },
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  },
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Add a product to the user's checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    product_id: The ID of the product to add (e.g., bouquet_roses).\n    quantity: The quantity of the product to add. Defaults to 1.",
+                        "name": "add_to_checkout",
+                        "parameters": null,
+                        "parameters_json_schema": {
+                          "properties": {
+                            "product_id": {
+                              "title": "Product Id",
+                              "type": "string"
+                            },
+                            "quantity": {
+                              "default": 1,
+                              "title": "Quantity",
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "product_id"
+                          ],
+                          "title": "add_to_checkoutParams",
+                          "type": "object"
+                        },
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  },
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Save customer delivery details and email for the current checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    email: The customer's email address.\n    street_address: The shipping address.\n    postal_code: The postal code.",
+                        "name": "set_customer_info",
+                        "parameters": null,
+                        "parameters_json_schema": {
+                          "properties": {
+                            "email": {
+                              "title": "Email",
+                              "type": "string"
+                            },
+                            "street_address": {
+                              "title": "Street Address",
+                              "type": "string"
+                            },
+                            "postal_code": {
+                              "title": "Postal Code",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "email",
+                            "street_address",
+                            "postal_code"
+                          ],
+                          "title": "set_customer_infoParams",
+                          "type": "object"
+                        },
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  },
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Process the payment and complete the checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.",
+                        "name": "complete_payment",
+                        "parameters": null,
+                        "parameters_json_schema": null,
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  }
+                ],
+                "sub_agents": []
+              }
+            },
+            "turns": [
+              {
+                "turn_index": 0,
+                "turn_id": "turn_0",
+                "events": [
+                  {
+                    "author": "root_agent",
+                    "content": {
+                      "parts": [
+                        {
+                          "media_resolution": null,
+                          "code_execution_result": null,
+                          "executable_code": null,
+                          "file_data": null,
+                          "function_call": null,
+                          "function_response": null,
+                          "inline_data": null,
+                          "text": "Hello! I'm your helpful shopping assistant for the UCP Flower Shop.\n\nI can help you with your shopping in a few ways:\n\n1.  **Search for products:** Tell me what you're looking for (like \"roses,\" \"tulips,\" or \"potted plants\"), and I can search our catalog for you.\n2.  **Add items to your cart:** Once you find something you like, I can add it to your checkout.\n3.  **Process your order:** I can collect your shipping details and process your payment to complete your order.\n\nHow can I help you start your flower shopping today?",
+                          "thought": null,
+                          "thought_signature": null,
+                          "video_metadata": null,
+                          "tool_call": null,
+                          "tool_response": null,
+                          "part_metadata": null
+                        }
+                      ],
+                      "role": "model"
+                    },
+                    "event_time": null,
+                    "state_delta": null,
+                    "active_tools": null
+                  }
+                ]
+              }
+            ]
+          },
+          "user_scenario": null
+        },
+        {
+          "prompt": {
+            "parts": [
+              {
+                "media_resolution": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "file_data": null,
+                "function_call": null,
+                "function_response": null,
+                "inline_data": null,
+                "text": "What's the weather like in San Francisco?",
+                "thought": null,
+                "thought_signature": null,
+                "video_metadata": null,
+                "tool_call": null,
+                "tool_response": null,
+                "part_metadata": null
+              }
+            ],
+            "role": "user"
+          },
+          "responses": [
+            {
+              "response": {
+                "parts": [
+                  {
+                    "media_resolution": null,
+                    "code_execution_result": null,
+                    "executable_code": null,
+                    "file_data": null,
+                    "function_call": null,
+                    "function_response": null,
+                    "inline_data": null,
+                    "text": "I'm sorry, I can only help you with inquiries related to the UCP Flower Shop, such as searching for flowers, adding items to your cart, or checking out. I don't have access to real-time weather information.\n\nIs there anything I can help you with regarding flowers or your order?",
+                    "thought": null,
+                    "thought_signature": null,
+                    "video_metadata": null,
+                    "tool_call": null,
+                    "tool_response": null,
+                    "part_metadata": null
+                  }
+                ],
+                "role": "model"
+              }
+            }
+          ],
+          "reference": null,
+          "system_instruction": null,
+          "conversation_history": null,
+          "rubric_groups": null,
+          "eval_case_id": "weather_query",
+          "intermediate_events": null,
+          "agent_info": null,
+          "agent_data": {
+            "agents": {
+              "root_agent": {
+                "agent_id": "root_agent",
+                "agent_type": "LlmAgent",
+                "description": "",
+                "instruction": "You are a helpful shopping assistant for the UCP Flower Shop. Your goal is to guide the user through their shopping journey:\n1. Help them search for products using 'search_products'.\n2. Add their selected items to checkout using 'add_to_checkout'.\n3. Ask the user for their email, shipping address, and postal code, then save it using 'set_customer_info'.\n4. Finalize the order using 'complete_payment' once details are filled.",
+                "tools": [
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Search for flowers or products available in the flower shop catalog.\n\nArgs:\n    query: The search term (e.g. roses, sunflowers, pot, tulips, orchid).",
+                        "name": "search_products",
+                        "parameters": null,
+                        "parameters_json_schema": {
+                          "properties": {
+                            "query": {
+                              "title": "Query",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "query"
+                          ],
+                          "title": "search_productsParams",
+                          "type": "object"
+                        },
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  },
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Add a product to the user's checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    product_id: The ID of the product to add (e.g., bouquet_roses).\n    quantity: The quantity of the product to add. Defaults to 1.",
+                        "name": "add_to_checkout",
+                        "parameters": null,
+                        "parameters_json_schema": {
+                          "properties": {
+                            "product_id": {
+                              "title": "Product Id",
+                              "type": "string"
+                            },
+                            "quantity": {
+                              "default": 1,
+                              "title": "Quantity",
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "product_id"
+                          ],
+                          "title": "add_to_checkoutParams",
+                          "type": "object"
+                        },
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  },
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Save customer delivery details and email for the current checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    email: The customer's email address.\n    street_address: The shipping address.\n    postal_code: The postal code.",
+                        "name": "set_customer_info",
+                        "parameters": null,
+                        "parameters_json_schema": {
+                          "properties": {
+                            "email": {
+                              "title": "Email",
+                              "type": "string"
+                            },
+                            "street_address": {
+                              "title": "Street Address",
+                              "type": "string"
+                            },
+                            "postal_code": {
+                              "title": "Postal Code",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "email",
+                            "street_address",
+                            "postal_code"
+                          ],
+                          "title": "set_customer_infoParams",
+                          "type": "object"
+                        },
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  },
+                  {
+                    "retrieval": null,
+                    "computer_use": null,
+                    "file_search": null,
+                    "google_search": null,
+                    "google_maps": null,
+                    "code_execution": null,
+                    "enterprise_web_search": null,
+                    "function_declarations": [
+                      {
+                        "description": "Process the payment and complete the checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.",
+                        "name": "complete_payment",
+                        "parameters": null,
+                        "parameters_json_schema": null,
+                        "response": null,
+                        "response_json_schema": {
+                          "type": "string"
+                        },
+                        "behavior": null
+                      }
+                    ],
+                    "google_search_retrieval": null,
+                    "parallel_ai_search": null,
+                    "url_context": null,
+                    "mcp_servers": null
+                  }
+                ],
+                "sub_agents": []
+              }
+            },
+            "turns": [
+              {
+                "turn_index": 0,
+                "turn_id": "turn_0",
+                "events": [
+                  {
+                    "author": "root_agent",
+                    "content": {
+                      "parts": [
+                        {
+                          "media_resolution": null,
+                          "code_execution_result": null,
+                          "executable_code": null,
+                          "file_data": null,
+                          "function_call": null,
+                          "function_response": null,
+                          "inline_data": null,
+                          "text": "I'm sorry, I can only help you with inquiries related to the UCP Flower Shop, such as searching for flowers, adding items to your cart, or checking out. I don't have access to real-time weather information.\n\nIs there anything I can help you with regarding flowers or your order?",
+                          "thought": null,
+                          "thought_signature": null,
+                          "video_metadata": null,
+                          "tool_call": null,
+                          "tool_response": null,
+                          "part_metadata": null
+                        }
+                      ],
+                      "role": "model"
+                    },
+                    "event_time": null,
+                    "state_delta": null,
+                    "active_tools": null
+                  }
+                ]
+              }
+            ]
+          },
+          "user_scenario": null
+        }
+      ],
+      "eval_dataset_df": null,
+      "candidate_name": null
+    }
+  ],
+  "metadata": {
+    "candidate_names": [
+      "candidate_1"
+    ],
+    "dataset_name": null,
+    "dataset_id": null,
+    "creation_timestamp": "2026-06-29T14:01:08.652775Z",
+    "dataset": [
+      {
+        "prompt_display_text": "Hello, what can you help me with?",
+        "prompt_raw_json": "{\n  \"parts\": [\n    {\n      \"text\": \"Hello, what can you help me with?\"\n    }\n  ],\n  \"role\": \"user\"\n}",
+        "reference": "",
+        "reference_raw_json": "",
+        "response_display_text": "Hello! I am a helpful AI assistant. I can help you with a wide range of tasks, including:\n\n1.  **Answering questions:** I can provide information on a variety of topics, from history and science to pop culture and current events.\n2.  **Creative tasks:** I can write stories, poems, code, scripts, musical pieces, email, letters, etc.\n3.  **Summarization and analysis:** I can help you understand and process large amounts of text.\n4.  **Specialized information (using my tools):**\n    *   I can check the **weather** for any location.\n    *   I can find the **current time** for a specific city.\n\nJust tell me what you'd like to do!",
+        "response_raw_json": "{\n  \"parts\": [\n    {\n      \"text\": \"Hello! I am a helpful AI assistant. I can help you with a wide range of tasks, including:\\n\\n1.  **Answering questions:** I can provide information on a variety of topics, from history and science to pop culture and current events.\\n2.  **Creative tasks:** I can write stories, poems, code, scripts, musical pieces, email, letters, etc.\\n3.  **Summarization and analysis:** I can help you understand and process large amounts of text.\\n4.  **Specialized information (using my tools):**\\n    *   I can check the **weather** for any location.\\n    *   I can find the **current time** for a specific city.\\n\\nJust tell me what you'd like to do!\"\n    }\n  ],\n  \"role\": \"model\"\n}",
+        "intermediate_events": null,
+        "agent_data": "{\"agents\": {\"root_agent\": {\"agent_id\": \"root_agent\", \"agent_type\": \"LlmAgent\", \"description\": \"\", \"instruction\": \"You are a helpful AI assistant designed to provide accurate and useful information.\", \"tools\": [{\"function_declarations\": [{\"description\": \"Simulates a web search. Use it get information on weather.\\n\\nArgs:\\n    query: A string containing the location to get weather information for.\\n\\nReturns:\\n    A string with the simulated weather information for the queried location.\", \"name\": \"get_weather\", \"parameters_json_schema\": {\"properties\": {\"query\": {\"title\": \"Query\", \"type\": \"string\"}}, \"required\": [\"query\"], \"title\": \"get_weatherParams\", \"type\": \"object\"}, \"response_json_schema\": {\"type\": \"string\"}}]}, {\"function_declarations\": [{\"description\": \"Simulates getting the current time for a city.\\n\\nArgs:\\n    city: The name of the city to get the current time for.\\n\\nReturns:\\n    A string with the current time information.\", \"name\": \"get_current_time\", \"parameters_json_schema\": {\"properties\": {\"query\": {\"title\": \"Query\", \"type\": \"string\"}}, \"required\": [\"query\"], \"title\": \"get_current_timeParams\", \"type\": \"object\"}, \"response_json_schema\": {\"type\": \"string\"}}]}], \"sub_agents\": []}}, \"turns\": [{\"turn_index\": 0, \"turn_id\": \"turn_0\", \"events\": [{\"author\": \"root_agent\", \"content\": {\"parts\": [{\"text\": \"Hello! I am a helpful AI assistant. I can help you with a wide range of tasks, including:\\n\\n1.  **Answering questions:** I can provide information on a variety of topics, from history and science to pop culture and current events.\\n2.  **Creative tasks:** I can write stories, poems, code, scripts, musical pieces, email, letters, etc.\\n3.  **Summarization and analysis:** I can help you understand and process large amounts of text.\\n4.  **Specialized information (using my tools):**\\n    *   I can check the **weather** for any location.\\n    *   I can find the **current time** for a specific city.\\n\\nJust tell me what you'd like to do!\"}], \"role\": \"model\"}}]}]}"
+      },
+      {
+        "prompt_display_text": "What's the weather like in San Francisco?",
+        "prompt_raw_json": "{\n  \"parts\": [\n    {\n      \"text\": \"What's the weather like in San Francisco?\"\n    }\n  ],\n  \"role\": \"user\"\n}",
+        "reference": "",
+        "reference_raw_json": "",
+        "response_display_text": "It's 60 degrees and foggy in San Francisco.",
+        "response_raw_json": "{\n  \"parts\": [\n    {\n      \"text\": \"It's 60 degrees and foggy in San Francisco.\"\n    }\n  ],\n  \"role\": \"model\"\n}",
+        "intermediate_events": null,
+        "agent_data": "{\"agents\": {\"root_agent\": {\"agent_id\": \"root_agent\", \"agent_type\": \"LlmAgent\", \"description\": \"\", \"instruction\": \"You are a helpful AI assistant designed to provide accurate and useful information.\", \"tools\": [{\"function_declarations\": [{\"description\": \"Simulates a web search. Use it get information on weather.\\n\\nArgs:\\n    query: A string containing the location to get weather information for.\\n\\nReturns:\\n    A string with the simulated weather information for the queried location.\", \"name\": \"get_weather\", \"parameters_json_schema\": {\"properties\": {\"query\": {\"title\": \"Query\", \"type\": \"string\"}}, \"required\": [\"query\"], \"title\": \"get_weatherParams\", \"type\": \"object\"}, \"response_json_schema\": {\"type\": \"string\"}}]}, {\"function_declarations\": [{\"description\": \"Simulates getting the current time for a city.\\n\\nArgs:\\n    city: The name of the city to get the current time for.\\n\\nReturns:\\n    A string with the current time information.\", \"name\": \"get_current_time\", \"parameters_json_schema\": {\"properties\": {\"query\": {\"title\": \"Query\", \"type\": \"string\"}}, \"required\": [\"query\"], \"title\": \"get_current_timeParams\", \"type\": \"object\"}, \"response_json_schema\": {\"type\": \"string\"}}]}], \"sub_agents\": []}}, \"turns\": [{\"turn_index\": 0, \"turn_id\": \"turn_0\", \"events\": [{\"author\": \"root_agent\", \"content\": {\"parts\": [{\"function_call\": {\"id\": \"adk-803e10c8-571b-458a-92d2-31f4d5de2ee2\", \"args\": {\"query\": \"San Francisco\"}, \"name\": \"get_weather\"}}], \"role\": \"model\"}}, {\"author\": \"root_agent\", \"content\": {\"parts\": [{\"function_response\": {\"id\": \"adk-803e10c8-571b-458a-92d2-31f4d5de2ee2\", \"name\": \"get_weather\", \"response\": {\"result\": \"It's 60 degrees and foggy.\"}}}], \"role\": \"user\"}}, {\"author\": \"root_agent\", \"content\": {\"parts\": [{\"text\": \"It's 60 degrees and foggy in San Francisco.\"}], \"role\": \"model\"}}]}]}"
+      },
+      {
+        "prompt_display_text": "Hello, what can you help me with?",
+        "prompt_raw_json": "{\n  \"parts\": [\n    {\n      \"text\": \"Hello, what can you help me with?\"\n    }\n  ],\n  \"role\": \"user\"\n}",
+        "reference": "",
+        "reference_raw_json": "",
+        "response_display_text": "Hello! I'm your helpful shopping assistant for the UCP Flower Shop.\n\nI can help you with your shopping in a few ways:\n\n1.  **Search for products:** Tell me what you're looking for (like \"roses,\" \"tulips,\" or \"potted plants\"), and I can search our catalog for you.\n2.  **Add items to your cart:** Once you find something you like, I can add it to your checkout.\n3.  **Process your order:** I can collect your shipping details and process your payment to complete your order.\n\nHow can I help you start your flower shopping today?",
+        "response_raw_json": "{\n  \"parts\": [\n    {\n      \"text\": \"Hello! I'm your helpful shopping assistant for the UCP Flower Shop.\\n\\nI can help you with your shopping in a few ways:\\n\\n1.  **Search for products:** Tell me what you're looking for (like \\\"roses,\\\" \\\"tulips,\\\" or \\\"potted plants\\\"), and I can search our catalog for you.\\n2.  **Add items to your cart:** Once you find something you like, I can add it to your checkout.\\n3.  **Process your order:** I can collect your shipping details and process your payment to complete your order.\\n\\nHow can I help you start your flower shopping today?\"\n    }\n  ],\n  \"role\": \"model\"\n}",
+        "intermediate_events": null,
+        "agent_data": "{\"agents\": {\"root_agent\": {\"agent_id\": \"root_agent\", \"agent_type\": \"LlmAgent\", \"description\": \"\", \"instruction\": \"You are a helpful shopping assistant for the UCP Flower Shop. Your goal is to guide the user through their shopping journey:\\n1. Help them search for products using 'search_products'.\\n2. Add their selected items to checkout using 'add_to_checkout'.\\n3. Ask the user for their email, shipping address, and postal code, then save it using 'set_customer_info'.\\n4. Finalize the order using 'complete_payment' once details are filled.\", \"tools\": [{\"function_declarations\": [{\"description\": \"Search for flowers or products available in the flower shop catalog.\\n\\nArgs:\\n    query: The search term (e.g. roses, sunflowers, pot, tulips, orchid).\", \"name\": \"search_products\", \"parameters_json_schema\": {\"properties\": {\"query\": {\"title\": \"Query\", \"type\": \"string\"}}, \"required\": [\"query\"], \"title\": \"search_productsParams\", \"type\": \"object\"}, \"response_json_schema\": {\"type\": \"string\"}}]}, {\"function_declarations\": [{\"description\": \"Add a product to the user's checkout session.\\n\\nArgs:\\n    tool_context: The tool context containing session state.\\n    product_id: The ID of the product to add (e.g., bouquet_roses).\\n    quantity: The quantity of the product to add. Defaults to 1.\", \"name\": \"add_to_checkout\", \"parameters_json_schema\": {\"properties\": {\"product_id\": {\"title\": \"Product Id\", \"type\": \"string\"}, \"quantity\": {\"default\": 1, \"title\": \"Quantity\", \"type\": \"integer\"}}, \"required\": [\"product_id\"], \"title\": \"add_to_checkoutParams\", \"type\": \"object\"}, \"response_json_schema\": {\"type\": \"string\"}}]}, {\"function_declarations\": [{\"description\": \"Save customer delivery details and email for the current checkout session.\\n\\nArgs:\\n    tool_context: The tool context containing session state.\\n    email: The customer's email address.\\n    street_address: The shipping address.\\n    postal_code: The postal code.\", \"name\": \"set_customer_info\", \"parameters_json_schema\": {\"properties\": {\"email\": {\"title\": \"Email\", \"type\": \"string\"}, \"street_address\": {\"title\": \"Street Address\", \"type\": \"string\"}, \"postal_code\": {\"title\": \"Postal Code\", \"type\": \"string\"}}, \"required\": [\"email\", \"street_address\", \"postal_code\"], \"title\": \"set_customer_infoParams\", \"type\": \"object\"}, \"response_json_schema\": {\"type\": \"string\"}}]}, {\"function_declarations\": [{\"description\": \"Process the payment and complete the checkout session.\\n\\nArgs:\\n    tool_context: The tool context containing session state.\", \"name\": \"complete_payment\", \"response_json_schema\": {\"type\": \"string\"}}]}], \"sub_agents\": []}}, \"turns\": [{\"turn_index\": 0, \"turn_id\": \"turn_0\", \"events\": [{\"author\": \"root_agent\", \"content\": {\"parts\": [{\"text\": \"Hello! I'm your helpful shopping assistant for the UCP Flower Shop.\\n\\nI can help you with your shopping in a few ways:\\n\\n1.  **Search for products:** Tell me what you're looking for (like \\\"roses,\\\" \\\"tulips,\\\" or \\\"potted plants\\\"), and I can search our catalog for you.\\n2.  **Add items to your cart:** Once you find something you like, I can add it to your checkout.\\n3.  **Process your order:** I can collect your shipping details and process your payment to complete your order.\\n\\nHow can I help you start your flower shopping today?\"}], \"role\": \"model\"}}]}]}"
+      },
+      {
+        "prompt_display_text": "What's the weather like in San Francisco?",
+        "prompt_raw_json": "{\n  \"parts\": [\n    {\n      \"text\": \"What's the weather like in San Francisco?\"\n    }\n  ],\n  \"role\": \"user\"\n}",
+        "reference": "",
+        "reference_raw_json": "",
+        "response_display_text": "I'm sorry, I can only help you with inquiries related to the UCP Flower Shop, such as searching for flowers, adding items to your cart, or checking out. I don't have access to real-time weather information.\n\nIs there anything I can help you with regarding flowers or your order?",
+        "response_raw_json": "{\n  \"parts\": [\n    {\n      \"text\": \"I'm sorry, I can only help you with inquiries related to the UCP Flower Shop, such as searching for flowers, adding items to your cart, or checking out. I don't have access to real-time weather information.\\n\\nIs there anything I can help you with regarding flowers or your order?\"\n    }\n  ],\n  \"role\": \"model\"\n}",
+        "intermediate_events": null,
+        "agent_data": "{\"agents\": {\"root_agent\": {\"agent_id\": \"root_agent\", \"agent_type\": \"LlmAgent\", \"description\": \"\", \"instruction\": \"You are a helpful shopping assistant for the UCP Flower Shop. Your goal is to guide the user through their shopping journey:\\n1. Help them search for products using 'search_products'.\\n2. Add their selected items to checkout using 'add_to_checkout'.\\n3. Ask the user for their email, shipping address, and postal code, then save it using 'set_customer_info'.\\n4. Finalize the order using 'complete_payment' once details are filled.\", \"tools\": [{\"function_declarations\": [{\"description\": \"Search for flowers or products available in the flower shop catalog.\\n\\nArgs:\\n    query: The search term (e.g. roses, sunflowers, pot, tulips, orchid).\", \"name\": \"search_products\", \"parameters_json_schema\": {\"properties\": {\"query\": {\"title\": \"Query\", \"type\": \"string\"}}, \"required\": [\"query\"], \"title\": \"search_productsParams\", \"type\": \"object\"}, \"response_json_schema\": {\"type\": \"string\"}}]}, {\"function_declarations\": [{\"description\": \"Add a product to the user's checkout session.\\n\\nArgs:\\n    tool_context: The tool context containing session state.\\n    product_id: The ID of the product to add (e.g., bouquet_roses).\\n    quantity: The quantity of the product to add. Defaults to 1.\", \"name\": \"add_to_checkout\", \"parameters_json_schema\": {\"properties\": {\"product_id\": {\"title\": \"Product Id\", \"type\": \"string\"}, \"quantity\": {\"default\": 1, \"title\": \"Quantity\", \"type\": \"integer\"}}, \"required\": [\"product_id\"], \"title\": \"add_to_checkoutParams\", \"type\": \"object\"}, \"response_json_schema\": {\"type\": \"string\"}}]}, {\"function_declarations\": [{\"description\": \"Save customer delivery details and email for the current checkout session.\\n\\nArgs:\\n    tool_context: The tool context containing session state.\\n    email: The customer's email address.\\n    street_address: The shipping address.\\n    postal_code: The postal code.\", \"name\": \"set_customer_info\", \"parameters_json_schema\": {\"properties\": {\"email\": {\"title\": \"Email\", \"type\": \"string\"}, \"street_address\": {\"title\": \"Street Address\", \"type\": \"string\"}, \"postal_code\": {\"title\": \"Postal Code\", \"type\": \"string\"}}, \"required\": [\"email\", \"street_address\", \"postal_code\"], \"title\": \"set_customer_infoParams\", \"type\": \"object\"}, \"response_json_schema\": {\"type\": \"string\"}}]}, {\"function_declarations\": [{\"description\": \"Process the payment and complete the checkout session.\\n\\nArgs:\\n    tool_context: The tool context containing session state.\", \"name\": \"complete_payment\", \"response_json_schema\": {\"type\": \"string\"}}]}], \"sub_agents\": []}}, \"turns\": [{\"turn_index\": 0, \"turn_id\": \"turn_0\", \"events\": [{\"author\": \"root_agent\", \"content\": {\"parts\": [{\"text\": \"I'm sorry, I can only help you with inquiries related to the UCP Flower Shop, such as searching for flowers, adding items to your cart, or checking out. I don't have access to real-time weather information.\\n\\nIs there anything I can help you with regarding flowers or your order?\"}], \"role\": \"model\"}}]}]}"
+      }
+    ]
+  },
+  "agent_info": null
+}

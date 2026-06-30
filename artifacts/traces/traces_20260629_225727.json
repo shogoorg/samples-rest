@@ -1,0 +1,310 @@
+{
+  "eval_cases": [
+    {
+      "prompt": {
+        "parts": [
+          {
+            "text": "Hello, what can you help me with?"
+          }
+        ],
+        "role": "user"
+      },
+      "responses": [
+        {
+          "response": {
+            "parts": [
+              {
+                "text": "Hello! I'm your helpful shopping assistant for the UCP Flower Shop.\n\nI can help you with your shopping in a few ways:\n\n1.  **Search for products:** Tell me what you're looking for (like \"roses,\" \"tulips,\" or \"potted plants\"), and I can search our catalog for you.\n2.  **Add items to your cart:** Once you find something you like, I can add it to your checkout.\n3.  **Process your order:** I can collect your shipping details and process your payment to complete your order.\n\nHow can I help you start your flower shopping today?"
+              }
+            ],
+            "role": "model"
+          }
+        }
+      ],
+      "eval_case_id": "greeting",
+      "agent_data": {
+        "agents": {
+          "root_agent": {
+            "agent_id": "root_agent",
+            "agent_type": "LlmAgent",
+            "description": "",
+            "instruction": "You are a helpful shopping assistant for the UCP Flower Shop. Your goal is to guide the user through their shopping journey:\n1. Help them search for products using 'search_products'.\n2. Add their selected items to checkout using 'add_to_checkout'.\n3. Ask the user for their email, shipping address, and postal code, then save it using 'set_customer_info'.\n4. Finalize the order using 'complete_payment' once details are filled.",
+            "tools": [
+              {
+                "function_declarations": [
+                  {
+                    "description": "Search for flowers or products available in the flower shop catalog.\n\nArgs:\n    query: The search term (e.g. roses, sunflowers, pot, tulips, orchid).",
+                    "name": "search_products",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "query": {
+                          "title": "Query",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "title": "search_productsParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Add a product to the user's checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    product_id: The ID of the product to add (e.g., bouquet_roses).\n    quantity: The quantity of the product to add. Defaults to 1.",
+                    "name": "add_to_checkout",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "product_id": {
+                          "title": "Product Id",
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "default": 1,
+                          "title": "Quantity",
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "product_id"
+                      ],
+                      "title": "add_to_checkoutParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Save customer delivery details and email for the current checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    email: The customer's email address.\n    street_address: The shipping address.\n    postal_code: The postal code.",
+                    "name": "set_customer_info",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "email": {
+                          "title": "Email",
+                          "type": "string"
+                        },
+                        "street_address": {
+                          "title": "Street Address",
+                          "type": "string"
+                        },
+                        "postal_code": {
+                          "title": "Postal Code",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "email",
+                        "street_address",
+                        "postal_code"
+                      ],
+                      "title": "set_customer_infoParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Process the payment and complete the checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.",
+                    "name": "complete_payment",
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              }
+            ],
+            "sub_agents": []
+          }
+        },
+        "turns": [
+          {
+            "turn_index": 0,
+            "turn_id": "turn_0",
+            "events": [
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "text": "Hello! I'm your helpful shopping assistant for the UCP Flower Shop.\n\nI can help you with your shopping in a few ways:\n\n1.  **Search for products:** Tell me what you're looking for (like \"roses,\" \"tulips,\" or \"potted plants\"), and I can search our catalog for you.\n2.  **Add items to your cart:** Once you find something you like, I can add it to your checkout.\n3.  **Process your order:** I can collect your shipping details and process your payment to complete your order.\n\nHow can I help you start your flower shopping today?"
+                    }
+                  ],
+                  "role": "model"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "prompt": {
+        "parts": [
+          {
+            "text": "What's the weather like in San Francisco?"
+          }
+        ],
+        "role": "user"
+      },
+      "responses": [
+        {
+          "response": {
+            "parts": [
+              {
+                "text": "I'm sorry, I can only help you with inquiries related to the UCP Flower Shop, such as searching for flowers, adding items to your cart, or checking out. I don't have access to real-time weather information.\n\nIs there anything I can help you with regarding flowers or your order?"
+              }
+            ],
+            "role": "model"
+          }
+        }
+      ],
+      "eval_case_id": "weather_query",
+      "agent_data": {
+        "agents": {
+          "root_agent": {
+            "agent_id": "root_agent",
+            "agent_type": "LlmAgent",
+            "description": "",
+            "instruction": "You are a helpful shopping assistant for the UCP Flower Shop. Your goal is to guide the user through their shopping journey:\n1. Help them search for products using 'search_products'.\n2. Add their selected items to checkout using 'add_to_checkout'.\n3. Ask the user for their email, shipping address, and postal code, then save it using 'set_customer_info'.\n4. Finalize the order using 'complete_payment' once details are filled.",
+            "tools": [
+              {
+                "function_declarations": [
+                  {
+                    "description": "Search for flowers or products available in the flower shop catalog.\n\nArgs:\n    query: The search term (e.g. roses, sunflowers, pot, tulips, orchid).",
+                    "name": "search_products",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "query": {
+                          "title": "Query",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "query"
+                      ],
+                      "title": "search_productsParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Add a product to the user's checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    product_id: The ID of the product to add (e.g., bouquet_roses).\n    quantity: The quantity of the product to add. Defaults to 1.",
+                    "name": "add_to_checkout",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "product_id": {
+                          "title": "Product Id",
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "default": 1,
+                          "title": "Quantity",
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "product_id"
+                      ],
+                      "title": "add_to_checkoutParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Save customer delivery details and email for the current checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.\n    email: The customer's email address.\n    street_address: The shipping address.\n    postal_code: The postal code.",
+                    "name": "set_customer_info",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "email": {
+                          "title": "Email",
+                          "type": "string"
+                        },
+                        "street_address": {
+                          "title": "Street Address",
+                          "type": "string"
+                        },
+                        "postal_code": {
+                          "title": "Postal Code",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "email",
+                        "street_address",
+                        "postal_code"
+                      ],
+                      "title": "set_customer_infoParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Process the payment and complete the checkout session.\n\nArgs:\n    tool_context: The tool context containing session state.",
+                    "name": "complete_payment",
+                    "response_json_schema": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              }
+            ],
+            "sub_agents": []
+          }
+        },
+        "turns": [
+          {
+            "turn_index": 0,
+            "turn_id": "turn_0",
+            "events": [
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "text": "I'm sorry, I can only help you with inquiries related to the UCP Flower Shop, such as searching for flowers, adding items to your cart, or checking out. I don't have access to real-time weather information.\n\nIs there anything I can help you with regarding flowers or your order?"
+                    }
+                  ],
+                  "role": "model"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
