@@ -119,7 +119,7 @@ uv run simple_happy_path_client.py --server_url=http://localhost:8182
 | `agents-cli eval` | Evaluate agent behavior |
 | `uv run pytest tests/unit tests/integration` | Run unit and integration tests |
 
-## 🛠️ Project Management
+## 🛠️ Project Management (TODO)
 
 | Command | What It Does |
 | :--- | :--- |
@@ -129,7 +129,7 @@ uv run simple_happy_path_client.py --server_url=http://localhost:8182
 
 ---
 
-## Development
+## Development (TODO)
 
 Edit your agent logic in `app/agent.py` and test with `agents-cli playground` - it auto-reloads on save.
 
@@ -143,6 +143,6 @@ agents-cli deploy
 To add CI/CD and Terraform, run `agents-cli scaffold enhance`.
 To set up your production infrastructure, run `agents-cli infra cicd`.
 
-## Observability
+## Observability (TODO)
 
 Built-in telemetry exports to Cloud Trace, BigQuery, and Cloud Logging.
