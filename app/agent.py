@@ -169,9 +169,7 @@ def select_fulfillment_destination(
     )
 
 
-def select_fulfillment_option(
-    tool_context: ToolContext, option_id: str
-) -> str:
+def select_fulfillment_option(tool_context: ToolContext, option_id: str) -> str:
     """Select the preferred shipping option.
 
     Args:
@@ -188,9 +186,7 @@ def select_fulfillment_option(
     cart = tool_context.state["cart"]
     subtotal = sum(PRODUCTS[pid]["price"] * qty for pid, qty in cart.items())
     discount = (
-        subtotal * 0.10
-        if tool_context.state.get("discount_code") == "10OFF"
-        else 0.0
+        subtotal * 0.10 if tool_context.state.get("discount_code") == "10OFF" else 0.0
     )
 
     total = subtotal - discount + shipping_fee
@@ -218,9 +214,7 @@ def complete_payment(
 
     subtotal = sum(PRODUCTS[pid]["price"] * qty for pid, qty in cart.items())
     discount = (
-        subtotal * 0.10
-        if tool_context.state.get("discount_code") == "10OFF"
-        else 0.0
+        subtotal * 0.10 if tool_context.state.get("discount_code") == "10OFF" else 0.0
     )
     shipping_fee = tool_context.state["shipping_fee"]
     total = subtotal - discount + shipping_fee
