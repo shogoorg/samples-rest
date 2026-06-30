@@ -1,6 +1,6 @@
 # samples-rest
 
-A hybrid project containing a ReAct shopping agent (built with Google ADK) and a UCP (Universal Commerce Protocol) Merchant Server.
+A hybrid project containing a ReAct shopping agent (built with Google ADK) and a UCP (Universal Commerce Protocol) Merchant Server. Both components reference the UCP (Universal Commerce Protocol) and its sample REST implementation.
 
 ## Project Structure
 
@@ -32,7 +32,7 @@ Before you begin, ensure you have:
 
 ### 1. Run the ADK Agent (Shopping Assistant)
 
-This agent simulates a full customer shopping checkout flow referencing the **UCP (Universal Commerce Protocol)**.
+This agent simulates a full customer shopping checkout flow referencing the **UCP (Universal Commerce Protocol)** and its sample REST implementation.
 
 Install `agents-cli` and its skills if not already installed:
 
