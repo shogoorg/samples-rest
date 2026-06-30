@@ -64,6 +64,7 @@ async def import_csv_data() -> None:
 
   try:
     # Import Products and Promotions to Products DB
+    assert db.manager.products_session_factory is not None
     async with db.manager.products_session_factory() as session:
       logger.info("Clearing existing products...")
       await session.execute(delete(Product))
@@ -115,6 +116,7 @@ async def import_csv_data() -> None:
       await session.commit()
 
     # Import Inventory and Customers to Transactions DB
+    assert db.manager.transactions_session_factory is not None
     async with db.manager.transactions_session_factory() as session:
       logger.info("Clearing existing inventory...")
       await session.execute(delete(Inventory))

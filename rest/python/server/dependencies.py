@@ -148,12 +148,14 @@ def get_fulfillment_service() -> FulfillmentService:
 
 async def get_products_db() -> AsyncGenerator[AsyncSession, None]:
   """Dependency provider for Products DB session."""
+  assert db.manager.products_session_factory is not None
   async with db.manager.products_session_factory() as session:
     yield session
 
 
 async def get_transactions_db() -> AsyncGenerator[AsyncSession, None]:
   """Dependency provider for Transactions DB session."""
+  assert db.manager.transactions_session_factory is not None
   async with db.manager.transactions_session_factory() as session:
     yield session
 
