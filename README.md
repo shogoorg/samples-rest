@@ -132,7 +132,7 @@ uv run simple_happy_path_client.py --server_url=http://localhost:8182
 
 ---
 
-## Development (TODO)
+## Development
 
 Edit your agent logic in `app/agent.py` and test with `agents-cli playground` - it auto-reloads on save.
 
