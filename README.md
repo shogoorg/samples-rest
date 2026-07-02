@@ -80,6 +80,31 @@ agents-cli run "Select the standard shipping option"
 agents-cli run "Complete my payment using mock_payment_handler"
 ```
 
+Example commands in Japanese (to run the entire shopping flow using Japanese prompts):
+
+```bash
+# 1. サポートされている決済方法を確認する
+agents-cli run "サポートされている決済方法は何ですか？"
+
+# 2. チェックアウトセッションを開始する
+agents-cli run "John Doe（メールアドレス john.doe@example.com）のために、bouquet_roses でチェックアウトセッションを作成してください"
+
+# 3. チェックアウトに商品を追加する（pot_ceramic を2つ追加）
+agents-cli run "チェックアウトに pot_ceramic を2つ追加してください"
+
+# 4. 割引コードを適用する（コード: 10OFF）
+agents-cli run "割引コード 10OFF を適用してください"
+
+# 5. 配送先住所を設定する
+agents-cli run "配送先住所は 1600 Amphitheatre Pkwy、郵便番号は 94043 です"
+
+# 6. 配送方法を選択する（標準配送を選択）
+agents-cli run "標準配送オプションを選択してください"
+
+# 7. 決済を完了し注文を確定する（mock_payment_handler を使用）
+agents-cli run "mock_payment_handler を使用して決済を完了してください"
+```
+
 
 ### 2. Run the UCP Merchant Server (Python/FastAPI)
 
