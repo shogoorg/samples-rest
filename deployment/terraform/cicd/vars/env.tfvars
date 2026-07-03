@@ -1,0 +1,11 @@
+staging_project_id = "shogoorg-samples-rest"
+prod_project_id = "shogoorg-samples-rest"
+cicd_runner_project_id = "shogoorg-samples-rest"
+region = "us-east1"
+repository_name = "samples-rest"
+repository_owner = "shogoorg"
+host_connection_name = "git-samples-rest"
+create_cb_connection = true
+create_repository = false
+github_app_installation_id = "144263351"
+github_pat_secret_id = "git-samples-rest-github-oauthtoken-a143d6"
