@@ -4,6 +4,9 @@ A hybrid project containing a ReAct shopping agent (built with Google ADK) and a
 
 Specifically, it is based on the [UCP Server README](https://github.com/Universal-Commerce-Protocol/samples/blob/main/rest/python/server/README.md) and the [UCP Client Script](https://github.com/Universal-Commerce-Protocol/samples/blob/main/rest/python/client/flower_shop/simple_happy_path_client.py) from the official Universal-Commerce-Protocol repository.
 
+* **Fully Stateless**: The agent runs 100% in-memory without direct SQLite access, communicating with the merchant server solely through HTTP API calls.
+
+
 
 ## Project Structure
 
@@ -137,6 +140,15 @@ cd rest/python/client/flower_shop
 uv run simple_happy_path_client.py --server_url=http://localhost:8182
 ```
 
+### Cloud Run Deployment
+If deploying the merchant server on Google Cloud:
+- **Server URL**: `https://<YOUR_UCP_SERVER_URL>`
+- **Discovery URL**: `https://<YOUR_UCP_SERVER_URL>/.well-known/ucp`
+
+> ⚠️ **Note on Cloud Run SQLite:** 
+> SQLite database files stored in `/tmp` are ephemeral. Active checkout sessions will reset when the container restarts. For production workloads, migrate to Cloud SQL (e.g., PostgreSQL).
+
+
 ## Commands
 
 | Command | Description |
@@ -163,20 +175,27 @@ Edit your agent logic in `app/agent.py` and test with `agents-cli playground` - 
 
 ## Deployment
 
-```bash
-gcloud config set project <your-project-id>
-agents-cli deploy
-```
+Deploy the ADK Agent to Cloud Run and expose it publicly:
 
-To add CI/CD and Terraform, run `agents-cli scaffold enhance`.
-To set up your production infrastructure, run `agents-cli infra cicd`.
+```bash
+# 1. Deploy with your UCP Merchant Server URL
+agents-cli deploy --update-env-vars="UCP_SERVER_URL=https://<YOUR_UCP_SERVER_URL>" --project=<YOUR_PROJECT_ID> --no-confirm-project
+
+# 2. Expose the service to allow public access
+gcloud run services add-iam-policy-binding samples-rest \
+  --member="allUsers" \
+  --role="roles/run.invoker" \
+  --region=us-east1 \
+  --project=<YOUR_PROJECT_ID>
+```
 
 ### Dev UI & A2A Endpoints (After Deployment)
 
-Once deployed and allowed for public access (`gcloud run services add-iam-policy-binding`):
-* **Playground (Dev UI)**: Accessible at `https://<YOUR_SERVICE_URL>/dev-ui/`
-* **A2A JSON-RPC Endpoint (※If A2A config is enabled)**: `https://<YOUR_SERVICE_URL>/a2a/app`
-* **Agent Card (※If A2A config is enabled)**: `https://<YOUR_SERVICE_URL>/a2a/app/.well-known/agent-card.json`
+Once deployed and allowed for public access:
+* **Playground (Dev UI)**: `https://<YOUR_SERVICE_URL>/dev-ui/` *(Redirects from root `/`)*
+* **A2A JSON-RPC Endpoint**: `https://<YOUR_SERVICE_URL>/a2a/app`
+* **Well-known Agent Card**: `https://<YOUR_SERVICE_URL>/a2a/app/.well-known/agent-card.json`
+* **Extended Agent Card**: `https://<YOUR_SERVICE_URL>/a2a/app/agent-card.json`
 
 ## Observability (TODO)
 
