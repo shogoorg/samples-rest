@@ -145,10 +145,6 @@ If deploying the merchant server on Google Cloud:
 - **Server URL**: `https://<YOUR_UCP_SERVER_URL>`
 - **Discovery URL**: `https://<YOUR_UCP_SERVER_URL>/.well-known/ucp`
 
-> ⚠️ **Note on Cloud Run SQLite:** 
-> SQLite database files stored in `/tmp` are ephemeral. Active checkout sessions will reset when the container restarts. For production workloads, migrate to Cloud SQL (e.g., PostgreSQL).
-
-
 ## Commands
 
 | Command | Description |
@@ -189,14 +185,7 @@ gcloud run services add-iam-policy-binding samples-rest \
   --project=<YOUR_PROJECT_ID>
 ```
 
-### Dev UI & A2A Endpoints (After Deployment)
 
-Once deployed and allowed for public access:
-* **Playground (Dev UI)**: `https://<YOUR_SERVICE_URL>/dev-ui/` *(Redirects from root `/`)*
-* **A2A JSON-RPC Endpoint**: `https://<YOUR_SERVICE_URL>/a2a/app`
-* **Well-known Agent Card**: `https://<YOUR_SERVICE_URL>/a2a/app/.well-known/agent-card.json`
-* **Extended Agent Card**: `https://<YOUR_SERVICE_URL>/a2a/app/agent-card.json`
-
-## Observability (TODO)
+## Observability
 
 Built-in telemetry exports to Cloud Trace, BigQuery, and Cloud Logging.
