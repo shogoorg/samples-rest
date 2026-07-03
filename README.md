@@ -159,7 +159,7 @@ If deploying the merchant server on Google Cloud:
 | `agents-cli eval` | Evaluate agent behavior |
 | `uv run pytest tests/unit tests/integration` | Run unit and integration tests |
 
-## 🛠️ Project Management (TODO)
+## 🛠️ Project Management
 
 | Command | What It Does |
 | :--- | :--- |
