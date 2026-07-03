@@ -31,13 +31,21 @@ os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "True"
 
 
 import httpx
-import sqlite3
 import random
 import uuid
 from google.adk.tools.tool_context import ToolContext
 
-SERVER_URL = "http://localhost:8182"
-PRODUCTS_DB_PATH = "/tmp/ucp_test/products.db"
+SERVER_URL = os.getenv("UCP_SERVER_URL", "http://localhost:8182")
+
+# 静的に定義した商品データ
+PRODUCTS_DATA = [
+    {"id": "bouquet_roses", "title": "Bouquet of Red Roses", "price": 3500},
+    {"id": "pot_ceramic", "title": "Ceramic Pot", "price": 1500},
+    {"id": "bouquet_sunflowers", "title": "Sunflower Bundle", "price": 2500},
+    {"id": "bouquet_tulips", "title": "Spring Tulips", "price": 3000},
+    {"id": "orchid_white", "title": "White Orchid", "price": 4500},
+    {"id": "gardenias", "title": "Gardenias", "price": 2000},
+]
 
 def get_ucp_headers() -> dict[str, str]:
     """Generate required headers for UCP API calls."""
@@ -54,38 +62,20 @@ def search_products(query: str) -> str:
     Args:
         query: The search term (e.g. roses, sunflowers, pot, tulips, orchid).
     """
-    try:
-        conn = sqlite3.connect(PRODUCTS_DB_PATH)
-        cursor = conn.cursor()
-        cursor.execute(
-            "SELECT id, title, price FROM products WHERE id LIKE ? OR title LIKE ?",
-            (f"%{query}%", f"%{query}%")
-        )
-        rows = cursor.fetchall()
-        conn.close()
+    query_lower = query.lower()
+    matches = [
+        p for p in PRODUCTS_DATA
+        if query_lower in p["id"].lower() or query_lower in p["title"].lower()
+    ]
 
-        if not rows:
-            return f"No products found matching '{query}'."
+    if not matches:
+        return f"No products found matching '{query}'."
 
-        res = "Available Products in Stock:\n"
-        for row in rows:
-            price_usd = row[2] / 100.0 if row[2] > 100 else row[2]
-            res += f"- [ID: {row[0]}] {row[1]} - ${price_usd:.2f}\n"
-        return res
-    except Exception as e:
-        PRODUCTS_FALLBACK = {
-            "bouquet_roses": {"title": "Bouquet of Red Roses", "price": 35.00},
-            "pot_ceramic": {"title": "Ceramic Pot", "price": 15.00},
-            "bouquet_sunflowers": {"title": "Sunflower Bundle", "price": 25.00},
-        }
-        query_lower = query.lower()
-        matches = [(pid, info) for pid, info in PRODUCTS_FALLBACK.items() if query_lower in pid]
-        if not matches:
-            return f"No products found matching '{query}' (Error: {e})."
-        res = "Available Products (Fallback Mode):\n"
-        for pid, info in matches:
-            res += f"- [ID: {pid}] {info['title']} - ${info['price']:.2f}\n"
-        return res
+    res = "Available Products in Stock:\n"
+    for p in matches:
+        price_usd = p["price"] / 100.0
+        res += f"- [ID: {p['id']}] {p['title']} - ${price_usd:.2f}\n"
+    return res
 
 def discover_payment_methods() -> str:
     """Discover supported payment handlers from the UCP Merchant Server."""
