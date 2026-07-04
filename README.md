@@ -1,8 +1,11 @@
 # samples-rest
 
-A hybrid project containing a ReAct shopping agent (built with Google ADK) and a UCP (Universal Commerce Protocol) Merchant Server. Both components reference the UCP (Universal Commerce Protocol) and its sample REST implementation.
+This Project enables running the UCP Merchant Server using agents-cli.
 
-Specifically, it is based on the [UCP Server README](https://github.com/Universal-Commerce-Protocol/samples/blob/main/rest/python/server/README.md) and the [UCP Client Script](https://github.com/Universal-Commerce-Protocol/samples/blob/main/rest/python/client/flower_shop/simple_happy_path_client.py) from the official Universal-Commerce-Protocol repository.
+agents-cli <https://github.com/Universal-Commerce-Protocol/samples/tree/main/rest/python/server> is a CLI and skill for building agents on the Gemini Enterprise Agent Platform.
+
+The UCP Merchant Server (Python/FastAPI) <https://github.com/Universal-Commerce-Protocol/samples/tree/main/rest/python/server> is a reference implementation of the UCP Merchant Server designed to be deployed both inside and outside of Google.
+
 
 * **Fully Stateless**: The agent runs 100% in-memory without direct SQLite access, communicating with the merchant server solely through HTTP API calls.
 
