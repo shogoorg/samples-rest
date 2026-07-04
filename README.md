@@ -7,10 +7,6 @@ agents-cli <https://github.com/Universal-Commerce-Protocol/samples/tree/main/res
 The UCP Merchant Server (Python/FastAPI) <https://github.com/Universal-Commerce-Protocol/samples/tree/main/rest/python/server> is a reference implementation of the UCP Merchant Server designed to be deployed both inside and outside of Google.
 
 
-* **Fully Stateless**: The agent runs 100% in-memory without direct SQLite access, communicating with the merchant server solely through HTTP API calls.
-
-
-
 ## Project Structure
 
 ```
@@ -111,7 +107,6 @@ agents-cli run "標準配送オプションを選択してください"
 agents-cli run "mock_payment_handler を使用して決済を完了してください"
 ```
 
-
 ### 2. Run the UCP Merchant Server (Python/FastAPI)
 
 This directory hosts the standalone **UCP Merchant Server (Python/FastAPI)** implementation.
@@ -169,8 +164,6 @@ If deploying the merchant server on Google Cloud:
 ---
 
 ## Development
-
-Edit your agent logic in `app/agent.py` and test with `agents-cli playground` - it auto-reloads on save.
 
 ## Deployment
 
