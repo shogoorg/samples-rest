@@ -72,19 +72,19 @@ agents-cli run "What payment methods are supported?"
 agents-cli run "Create a checkout session with bouquet_roses for John Doe, email john.doe@example.com"
 
 # 3. Add more items to the checkout (calls 'add_item_to_checkout')
-agents-cli run "Add two pot_ceramic to my checkout" --session-id  0070f53b-5956-44e6-916c-52dab2346b6a　<session_id>
+agents-cli run "Add two pot_ceramic to my checkout" --session-id <session_id>
 
 # 4. Apply a discount code (calls 'apply_discount_code')
-agents-cli run "Apply discount code 10OFF" --session-id  0070f53b-5956-44e6-916c-52dab2346b6a　<session_id>
+agents-cli run "Apply discount code 10OFF" --session-id <session_id>
 
 # 5. Set shipping address (calls 'select_fulfillment_destination')
-agents-cli run "My shipping address is 1600 Amphitheatre Pkwy, postal code is 94043" --session-id  0070f53b-5956-44e6-916c-52dab2346b6a　<session_id>
+agents-cli run "My shipping address is 1600 Amphitheatre Pkwy, postal code is 94043" --session-id <session_id>
 
 # 6. Select shipping option (calls 'select_fulfillment_option')
-agents-cli run "Select the standard shipping option" --session-id  0070f53b-5956-44e6-916c-52dab2346b6a　<session_id>
+agents-cli run "Select the standard shipping option" --session-id <session_id>
 
 # 7. Finalize payment and place order (calls 'complete_payment')
-agents-cli run "Complete my payment using mock_payment_handler" --session-id  0070f53b-5956-44e6-916c-52dab2346b6a<session_id>
+agents-cli run "Complete my payment using mock_payment_handler" --session-id <session_id>
 ```
 
 Example commands in Japanese (to run the entire shopping flow using Japanese prompts):
