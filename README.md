@@ -4,8 +4,9 @@ This Project enables running the UCP Merchant Server using agents-cli.
 
 agents-cli <https://github.com/Universal-Commerce-Protocol/samples/tree/main/rest/python/server> is a CLI and skill for building agents on the Gemini Enterprise Agent Platform.
 
-The UCP Merchant Server (Python/FastAPI) <https://github.com/Universal-Commerce-Protocol/samples/tree/main/rest/python/server> is a reference implementation of the UCP Merchant Server designed to be deployed both inside and outside of Google.
+The UCP Merchant Server (Python/FastAPI) <https://github.com/Universal-Commerce-Protocol/samples/tree/main/rest/python/server> is a reference implementation of the UCP Merchant Server designed to be deployed both inside and outside of Google. 
 
+This repository is a cloned and reused version of the UCP Merchant Server, which has been refactored to support interactive shopping flows and agent verification using `agents-cli`.
 
 ## Project Structure
 
@@ -57,7 +58,11 @@ Start the interactive development playground:
 agents-cli playground
 ```
 
+> ⚠️ **Important:** Before starting the playground or running the agent commands, you must first run the UCP Merchant Server. Please follow the instructions in [2. Run the UCP Merchant Server (Python/FastAPI)](#2-run-the-ucp-merchant-server-pythonfastapi) below to start the server.
+
 Or test the agent directly from your terminal using commands to run through the entire shopping flow:
+
+> ⚠️ **Note:** To maintain the checkout state across sequential terminal runs, you must append the `--session-id <session_id>` flag (using the ID printed in the console from the previous run) to each subsequent command. Alternatively, use `agents-cli playground` to handle session states automatically.
 
 ```bash
 # 1. Discover payment methods (calls 'discover_payment_methods')
@@ -67,22 +72,24 @@ agents-cli run "What payment methods are supported?"
 agents-cli run "Create a checkout session with bouquet_roses for John Doe, email john.doe@example.com"
 
 # 3. Add more items to the checkout (calls 'add_item_to_checkout')
-agents-cli run "Add two pot_ceramic to my checkout"
+agents-cli run "Add two pot_ceramic to my checkout" --session-id  0070f53b-5956-44e6-916c-52dab2346b6a　<session_id>
 
 # 4. Apply a discount code (calls 'apply_discount_code')
-agents-cli run "Apply discount code 10OFF"
+agents-cli run "Apply discount code 10OFF" --session-id  0070f53b-5956-44e6-916c-52dab2346b6a　<session_id>
 
 # 5. Set shipping address (calls 'select_fulfillment_destination')
-agents-cli run "My shipping address is 1600 Amphitheatre Pkwy, postal code is 94043"
+agents-cli run "My shipping address is 1600 Amphitheatre Pkwy, postal code is 94043" --session-id  0070f53b-5956-44e6-916c-52dab2346b6a　<session_id>
 
 # 6. Select shipping option (calls 'select_fulfillment_option')
-agents-cli run "Select the standard shipping option"
+agents-cli run "Select the standard shipping option" --session-id  0070f53b-5956-44e6-916c-52dab2346b6a　<session_id>
 
 # 7. Finalize payment and place order (calls 'complete_payment')
-agents-cli run "Complete my payment using mock_payment_handler"
+agents-cli run "Complete my payment using mock_payment_handler" --session-id  0070f53b-5956-44e6-916c-52dab2346b6a<session_id>
 ```
 
 Example commands in Japanese (to run the entire shopping flow using Japanese prompts):
+
+> ⚠️ **Note:** To maintain the checkout state across sequential terminal runs, you must append the `--session-id <session_id>` flag (using the ID printed in the console from the previous run) to each subsequent command. Alternatively, use `agents-cli playground` to handle session states automatically.
 
 ```bash
 # 1. サポートされている決済方法を確認する
@@ -92,19 +99,19 @@ agents-cli run "サポートされている決済方法は何ですか？"
 agents-cli run "John Doe（メールアドレス john.doe@example.com）のために、bouquet_roses でチェックアウトセッションを作成してください"
 
 # 3. チェックアウトに商品を追加する（pot_ceramic を2つ追加）
-agents-cli run "チェックアウトに pot_ceramic を2つ追加してください"
+agents-cli run "チェックアウトに pot_ceramic を2つ追加してください" --session-id <session_id>
 
 # 4. 割引コードを適用する（コード: 10OFF）
-agents-cli run "割引コード 10OFF を適用してください"
+agents-cli run "割引コード 10OFF を適用してください" --session-id <session_id>
 
 # 5. 配送先住所を設定する
-agents-cli run "配送先住所は 1600 Amphitheatre Pkwy、郵便番号は 94043 です"
+agents-cli run "配送先住所は 1600 Amphitheatre Pkwy、郵便番号は 94043 です" --session-id <session_id>
 
 # 6. 配送方法を選択する（標準配送を選択）
-agents-cli run "標準配送オプションを選択してください"
+agents-cli run "標準配送オプションを選択してください" --session-id <session_id>
 
 # 7. 決済を完了し注文を確定する（mock_payment_handler を使用）
-agents-cli run "mock_payment_handler を使用して決済を完了してください"
+agents-cli run "mock_payment_handler を使用して決済を完了してください" --session-id <session_id>
 ```
 
 ### 2. Run the UCP Merchant Server (Python/FastAPI)
