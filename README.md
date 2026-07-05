@@ -6,7 +6,7 @@ agents-cli <https://github.com/Universal-Commerce-Protocol/samples/tree/main/res
 
 The UCP Merchant Server (Python/FastAPI) <https://github.com/Universal-Commerce-Protocol/samples/tree/main/rest/python/server> is a reference implementation of the UCP Merchant Server designed to be deployed both inside and outside of Google. 
 
-This repository is a cloned and reused version of the UCP Merchant Server, which has been refactored to support interactive shopping flows and agent verification using `agents-cli`.
+Disclaimer:This repository is a cloned and reused version of the UCP Merchant Server, which has been refactored to support interactive shopping flows and agent verification using `agents-cli`.
 
 ## Project Structure
 
