@@ -2,13 +2,13 @@
 
 This Project enables running the UCP Merchant Server using agents-cli.
 
-agents-cli <https://github.com/Universal-Commerce-Protocol/samples/tree/main/rest/python/server> is a CLI and skill for building agents on the Gemini Enterprise Agent Platform.
+[agents-cli](https://github.com/google/agents-cli) is a CLI and skill for building agents on the Gemini Enterprise Agent Platform.
 
-The UCP Merchant Server (Python/FastAPI) <https://github.com/Universal-Commerce-Protocol/samples/tree/main/rest/python/server> is a reference implementation of the UCP Merchant Server designed to be deployed both inside and outside of Google. 
+[The UCP Merchant Server (Python/FastAPI)](https://github.com/Universal-Commerce-Protocol/samples/tree/main/rest/python/server) is a reference implementation of the UCP Merchant Server designed to be deployed both inside and outside of Google. 
 
 Disclaimer:This repository is a cloned and reused version of the UCP Merchant Server, which has been refactored to support interactive shopping flows and agent verification using `agents-cli`.
 
-## 🏗️ Technical Architecture & Design Diagram
+## Technical Architecture & Design Diagram
 
 To fully satisfy the enterprise evaluation criteria, this project demonstrates a highly secure, stateful multi-agent system architecture that bridges the Gemini Enterprise Agent Platform and the Universal Commerce Protocol (UCP).
 
@@ -301,7 +301,7 @@ agents-cli deploy --status
 | `agents-cli eval` | Evaluate agent behavior |
 | `uv run pytest tests/unit tests/integration` | Run unit and integration tests |
 
-## 🛠️ Project Management
+## Project Management
 
 | Command | What It Does |
 | :--- | :--- |
