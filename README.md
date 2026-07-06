@@ -39,6 +39,17 @@ graph TD
     MCP --- DB
 ```
 
+### 💡 Architectural Differences from the A2A Version ([samples-a2a](https://github.com/shogoorg/samples-a2a))
+
+Both the REST version (this repository) and the A2A version (Agent-to-Agent) are submitted to the hackathon, but they employ fundamentally different architectural patterns:
+
+| Comparison Metric | REST Version (samples-rest) | A2A Version (samples-a2a) |
+| :--- | :--- | :--- |
+| **System Coupling** | **Decoupled (疎結合)** | **Unified / In-Memory Co-located (インメモリ同居型・一体型)** |
+| **Communication Flow** | The agent (Client) and the merchant server (FastAPI) communicate **over the network via UCP-compliant REST APIs** | The agent runtime and Mock DB logic are run within a single FastAPI process, executing data operations **directly in-memory** |
+| **Primary Benefits** | Uses standard client-server interfaces, making it highly portable and easier to integrate with real production REST APIs | Eliminates network overhead for ultra-low latency; immune to network/transport failures, ensuring deterministic execution |
+| **Multi-Agent / A2A** | Specialized for single-agent-to-server scenarios | Publishes **JSON-RPC routes for Agent-to-Agent (A2A) communication**, facilitating future collaborative multi-agent scenarios |
+
 ### Architectural Breakdown
 
 1. **The Problem & Meaningful Agent Solution:**
