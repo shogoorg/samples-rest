@@ -25,12 +25,12 @@ graph TD
     end
     
     subgraph Skills["Enterprise Agent Skills Layer"]
-        Tools["• discover_payment_methods<br>• create_checkout_session<br>• add_item_to_checkout<br>• apply_discount_code<br>• select_fulfillment_xxx<br>• complete_payment"]
+        Tools["- discover_payment_methods<br>- create_checkout_session<br>- add_item_to_checkout<br>- apply_discount_code<br>- select_fulfillment_xxx<br>- complete_payment"]
     end
     
     subgraph Backend["UCP Merchant Server (FastAPI Layer)"]
         MCP["MCP-Compatible Layer"]
-        DB[("Local SQLite DB<br>(Products, Carts, Transactions)")]
+        DB[("Local SQLite DB<br>- Products, Carts, Transactions -")]
     end
     
     User -->|"Natural Language Intent (Multi-Turn)"| Platform
